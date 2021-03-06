@@ -34,8 +34,9 @@ export const actions = {
           commit('setGoodsInfoList', res.data.data)
           commit('pagination/setPagination', res.data, { root: true })
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },

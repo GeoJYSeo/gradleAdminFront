@@ -70,16 +70,18 @@ export const actions = {
         },
       }
       await axios
-        .get(`http://localhost:8080/api/cart?userId=${userId}`, config)
+        .get(`http://localhost:8080/api/cart?user_id=${userId}`, config)
         .then((res) => {
           commit('setCartInfoList', res.data.data)
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          // this.$router.push({ name: 'error' })
         })
     }
   },
-  async modify({ state, commit, dispatch }, cartInfo) {
+  async modify({ dispatch }, cartInfo) {
+    console.log(cartInfo)
     const accessToken = auth.getAccessToken()
     if (accessToken) {
       const config = {
@@ -93,7 +95,7 @@ export const actions = {
           id: cartInfo.id,
           cart_quantity: cartInfo.cart_quantity,
           user_id: cartInfo.user_api_response.id,
-          goods_id: cartInfo.goods_api_response.id,
+          goods_ids: [cartInfo.goods_api_response.id],
         },
       }
       await axios
@@ -106,23 +108,48 @@ export const actions = {
           // commit('setCartInfoList', state.cartInfoList)
           dispatch('getCartList')
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
+        })
+    }
+  },
+  async destroy({ dispatch }, cartInfo) {
+    console.log(cartInfo)
+    const userId = cartInfo.user_api_response.id
+    const accessToken = auth.getAccessToken()
+    if (accessToken) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+      await axios
+        .delete(
+          `http://localhost:8080/api/cart/${cartInfo.id}?user_id=${userId}`,
+          config
+        )
+        .then((res) => {
+          dispatch('getCartList')
+        })
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },
   moveToOrderSum(context, orderInfo) {
-    this.$router.push({ name: 'order-summary', params: { orderInfo } })
+    this.$router.push({ name: 'orders-summary', params: { orderInfo } })
   },
   moveToGoodsList() {
     alert('Error occurred! Please try again!')
     this.$router.push({ name: 'goods-list' })
   },
   moveToCartList() {
-    this.$router.push({ name: 'order-cart_list' })
+    this.$router.push({ name: 'orders-cart_list' })
   },
   moveToOrderList() {
-    this.$router.push({ name: 'order-list' })
+    this.$router.push({ name: 'orders-list' })
   },
   back() {
     this.$router.push({ name: 'index' })

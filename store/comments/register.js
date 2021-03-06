@@ -23,7 +23,8 @@ export const actions = {
             root: true,
           })
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           commit('dialog/setRegComment', 'error', { root: true })
         })
     }

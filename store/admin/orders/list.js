@@ -60,8 +60,9 @@ export const actions = {
         .then((res) => {
           commit('setOrderInfo', res.data.data)
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },
@@ -69,7 +70,7 @@ export const actions = {
     this.$router.push({ name: 'admin-orders-detail', query: { orderId } })
   },
   moveToCartList() {
-    this.$router.push({ name: 'order-cart_list' })
+    this.$router.push({ name: 'orders-cart_list' })
   },
   back() {
     this.$router.push({ name: 'admin' })

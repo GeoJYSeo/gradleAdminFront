@@ -2,17 +2,17 @@ import axios from 'axios'
 import auth from '@/middleware/auth'
 
 export const state = () => ({
-  orderDetailInfo: null,
+  orderDetailInfoList: null,
 })
 
 export const mutations = {
-  setOrderInfo(state, orderDetailInfo) {
-    state.orderDetailInfo = orderDetailInfo
+  setOrderInfo(state, orderDetailInfoList) {
+    state.orderDetailInfoList = orderDetailInfoList
   },
 }
 
 export const actions = {
-  getOrderDetailInfo({ commit }, orderId) {
+  getOrderDetailInfoList({ commit }, orderId) {
     const accessToken = auth.getAccessToken()
     if (accessToken) {
       const config = {
@@ -27,14 +27,14 @@ export const actions = {
         )
         .then((res) => {
           commit('setOrderInfo', res.data.data)
-          commit('pagination/setPagination', res.data, { root: true })
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },
-  changeOrderState({ commit }, orderInfo) {
+  cancelOrder({ commit }, orderInfo) {
     orderInfo.user_id = auth.getUserId()
     const accessToken = auth.getAccessToken()
     if (accessToken) {
@@ -51,14 +51,15 @@ export const actions = {
         .put(`http://localhost:8080/api/order`, reqObj, config)
         .then((res) => {
           commit('setOrderInfo', res.data.data)
-          commit('pagination/setPagination', res.data, { root: true })
+          this.$router.push({ name: 'member-mypage-orders-list' })
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },
   back() {
-    this.$router.push({ name: 'member-mypage-order-list' })
+    this.$router.push({ name: 'member-mypage-orders-list' })
   },
 }

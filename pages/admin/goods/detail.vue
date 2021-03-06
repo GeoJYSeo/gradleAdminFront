@@ -23,6 +23,7 @@
               :images-info="imagesInfo"
               btn-text="modify"
               @sendEvent="moveToModify"
+              @destroy="destroy"
               @back="back"
             />
           </div>

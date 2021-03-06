@@ -88,19 +88,6 @@
           >
         </v-col>
       </v-row>
-      <v-row v-else>
-        <v-col>
-          <v-btn
-            block
-            large
-            depressed
-            color="#424242"
-            class="white--text"
-            @click="sendConfirm"
-            >confirm</v-btn
-          >
-        </v-col>
-      </v-row>
     </div>
   </v-card>
 </template>
@@ -137,9 +124,6 @@ export default {
     },
     modOrderUserInfo() {
       this.$emit('modOrderUserInfo')
-    },
-    sendConfirm() {
-      this.$emit('sendConfirm')
     },
   },
 }

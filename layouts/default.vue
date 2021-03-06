@@ -50,7 +50,7 @@
                 <v-icon>mdi-comment-text-multiple-outline</v-icon>
               </v-list-item-action>
             </v-list-item>
-            <v-list-item router :to="{ name: 'member-mypage-order-list' }">
+            <v-list-item router :to="{ name: 'member-mypage-orders-list' }">
               <v-list-item-content>
                 <v-list-item-title>Order List</v-list-item-title>
               </v-list-item-content>
@@ -194,7 +194,7 @@
 
       <v-toolbar-title>Application</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon router :to="{ name: 'order-cart_list' }">
+      <v-btn icon router :to="{ name: 'orders-cart_list' }">
         <v-icon>mdi-cart-outline</v-icon>
       </v-btn>
       <v-menu v-if="isLogin" offset-y>

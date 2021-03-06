@@ -14,11 +14,13 @@
               </v-col>
             </v-row>
           </v-toolbar>
-          <ProgressLiner v-if="!orderDetailInfo" />
+          <ProgressLiner v-if="!orderDetailInfoList" />
           <v-card v-else class="pt-7">
             <OrderList
               :is-admin="true"
-              :order-detail-info="orderDetailInfo"
+              :order-detail-info="
+                JSON.parse(JSON.stringify(orderDetailInfoList))
+              "
               @changeOrderState="changeOrderState"
               @orderCancel="orderCancel"
             />
@@ -28,17 +30,16 @@
                   <v-toolbar-title>My Order Goods</v-toolbar-title>
                 </v-toolbar>
                 <OrderGoodsList
-                  v-for="(orderGoodsInfo,
-                  index) in orderDetailInfo.order_detail_api_response_list"
+                  v-for="(orderDetailInfo,
+                  index) in orderDetailInfoList.order_detail_api_response_list"
                   :key="index"
-                  :order-detail-info="orderGoodsInfo"
+                  :order-detail-info="orderDetailInfo"
                 />
               </v-card>
             </v-row>
             <v-pagination
-              v-if="pagination"
               v-model="curPageNum"
-              :length="pagination.total_pages"
+              :length="totalPages"
               :total-visible="7"
             ></v-pagination>
           </v-card>
@@ -64,24 +65,35 @@ export default {
   components: { ProgressLiner, IconButton, OrderList, OrderGoodsList },
   data() {
     return {
-      curPageNum: 0,
+      curPageNum: 1,
+      dispItemCount: 15,
     }
   },
   computed: {
-    ...mapState('admin/orders/detail', ['orderDetailInfo']),
-    ...mapState('pagination', ['pagination', 'plusCurPageNum']),
-  },
-  watch: {
-    curPageNum(newVal) {
-      this.getGoodsList([newVal, this.keyword])
+    ...mapState('admin/orders/detail', ['orderDetailInfoList']),
+    totalPages() {
+      return this.orderDetailInfoList.order_detail_api_response_list
+        ? Math.ceil(
+            this.orderDetailInfoList.order_detail_api_response_list.length /
+              this.dispItemCount
+          )
+        : 0
+    },
+    dispOrderDetailList() {
+      return this.orderDetailInfoList.length === 0
+        ? null
+        : this.orderDetailInfoList.slice(
+            (this.curPageNum - 1) * this.dispItemCount,
+            this.dispItemCount * this.curPageNum
+          )
     },
   },
   async created() {
-    await this.getOrderDetailInfo(this.$route.query.orderId)
+    await this.getOrderDetailInfoList(this.$route.query.orderId)
   },
   methods: {
     ...mapActions('admin/orders/detail', [
-      'getOrderDetailInfo',
+      'getOrderDetailInfoList',
       'changeOrderState',
       'orderCancel',
       'back',

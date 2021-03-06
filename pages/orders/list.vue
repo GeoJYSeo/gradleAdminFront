@@ -6,9 +6,15 @@
           <v-toolbar flat dark>
             <v-row>
               <v-col>
-                <v-toolbar-title>Cart List</v-toolbar-title>
+                <v-toolbar-title>Goods Order List</v-toolbar-title>
               </v-col>
               <v-spacer></v-spacer>
+              <v-col cols="12" sm="1">
+                <IconButton
+                  text="mdi-circle-edit-outline"
+                  @sendEvent="moveToCartList"
+                />
+              </v-col>
               <v-col cols="12" sm="1">
                 <IconButton text="mdi-transfer-left" @sendEvent="back" />
               </v-col>
@@ -26,7 +32,11 @@
                     show-group-by
                     :footer-props="footerProps"
                   >
-                    <template v-slot:[`item.image`]="{ item }">
+                    <template
+                      v-slot:[`item.image`]="{
+                        item,
+                      }"
+                    >
                       <img
                         :src="
                           require(`@/static/${item.goods_api_response.goods_image_api_response_list[0].gds_thumb_img}`)
@@ -38,44 +48,21 @@
                     <template v-slot:[`item.gds_price`]="{ item }">
                       {{ Number(item.goods_api_response.gds_price).toFixed(2) }}
                     </template>
-                    <template v-slot:[`item.cart_price`]="{ item }">
-                      {{ Number(item.cart_price).toFixed(2) }}
-                    </template>
-                    <template v-slot:[`item.modCartGoods`]="{ item }">
-                      <v-icon @click="modify(item)"
-                        >mdi-square-edit-outline</v-icon
-                      >
-                    </template>
-                    <template v-slot:[`item.delCartGoods`]="{ item }">
-                      <v-icon @click="destroy(item)"
-                        >mdi-delete-circle-outline</v-icon
-                      >
-                    </template>
                     <template v-slot:[`item.cart_quantity`]="{ item }">
                       <div v-if="item.goods_api_response.gds_stock === '0'">
                         Out of Stock
                       </div>
-                      <v-row v-else no-gutters justify="center">
-                        <v-col sm="2">
-                          <v-btn icon @click="plusQty(item)">
-                            <v-icon>mdi-plus-circle-outline</v-icon>
-                          </v-btn>
-                        </v-col>
-                        <v-col sm="3">
-                          <v-text-field
-                            v-model="item.cart_quantity"
-                            :rules="stockRules"
-                            dense
-                            hide-details
-                            outlined
-                          ></v-text-field>
-                        </v-col>
-                        <v-col sm="2">
-                          <v-btn icon @click="minusQty(item)">
-                            <v-icon>mdi-minus-circle-outline</v-icon>
-                          </v-btn>
-                        </v-col>
-                      </v-row>
+                      <div v-else>
+                        {{ item.cart_quantity }}
+                      </div>
+                    </template>
+                    <template v-slot:[`item.cart_price`]="{ item }">
+                      {{ Number(item.cart_price).toFixed(2) }}
+                    </template>
+                    <template v-slot:[`item.delGoods`]="{ item }">
+                      <v-icon @click="delOrderList(item.id)"
+                        >mdi-delete-circle-outline</v-icon
+                      >
                     </template>
                   </v-data-table>
                 </template>
@@ -100,10 +87,10 @@
                       </v-list-item-subtitle>
                       <v-card-actions class="justify-end">
                         <RoundButton
-                          text="order"
+                          text="check out"
                           color="#009688"
                           :disabled="btnAct"
-                          @sendEvent="moveToOrderList"
+                          @sendEvent="moveToOrderInfo(cartInfo)"
                         />
                       </v-card-actions>
                     </v-list-item-content>
@@ -120,27 +107,24 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import authMiddleware from '@/middleware/auth'
-import ProgressLiner from '@/components/molecules/progress_liner'
+import progressLiner from '@/components/molecules/progress_liner'
 import IconButton from '@/components/molecules/icon_button'
-import RoundButton from '@/components/molecules/round_button'
 
 export default {
-  middleware: [authMiddleware.loginAuthentication()],
-  components: { ProgressLiner, RoundButton, IconButton },
+  components: { progressLiner, IconButton },
+  data() {
+    return {
+      cartInfo: null,
+    }
+  },
   computed: {
-    ...mapState('validation', ['stockRules']),
-    ...mapState('order/cart_list', ['cartInfoList', 'headers', 'footerProps']),
-    cartInfo() {
-      return JSON.parse(JSON.stringify(this.cartInfoList))
+    ...mapState('orders/cart_list', ['cartInfoList']),
+    ...mapState('orders/list', ['headers', 'footerProps']),
+    btnAct() {
+      return !this.cartInfo.length || false
     },
     totalPrice() {
       if (this.cartInfo.length) {
-        this.cartInfo.forEach((cart) => {
-          if (cart.goods_api_response.gds_stock === '0') {
-            cart.cart_price = 0
-          }
-        })
         return this.cartInfo
           .map((cart) => cart.cart_price)
           .reduce((a, b) => a + b)
@@ -148,36 +132,31 @@ export default {
         return 0
       }
     },
-    btnAct() {
-      return !this.cartInfo.length || false
-    },
   },
-  async created() {
-    await this.getCartList()
+  created() {
+    this.setCartInfo()
   },
   methods: {
-    ...mapActions('order/cart_list', [
-      'getCartList',
-      'modify',
-      'moveToOrderList',
-      'back',
-    ]),
-    plusQty(item) {
-      const gdsStock = this.cartInfo.find(
-        (cart) => cart.goods_api_response.id === item.goods_api_response.id
-      ).goods_api_response.gds_stock
-
-      item.cart_quantity =
-        ++item.cart_quantity > gdsStock
-          ? item.goods_api_response.gds_stock
-          : item.cart_quantity
+    ...mapActions('orders/cart_list', ['getCartList', 'moveToCartList']),
+    ...mapActions('orders/list', ['delCartGoods', 'moveToOrderInfo', 'back']),
+    async setCartInfo() {
+      if (this.$route.params.cartInfo) {
+        this.cartInfo = this.$route.params.cartInfo
+      } else {
+        await this.getCartList()
+        this.cartInfo = this.cartInfoList
+        if (!this.cartInfoList) this.moveToCartList()
+      }
+      this.cartInfo = this.cartInfo.filter(
+        (cart) => cart.goods_api_response.gds_stock !== '0'
+      )
     },
-    minusQty(item) {
-      item.cart_quantity = --item.cart_quantity < 1 ? 1 : item.cart_quantity--
-    },
-    async modGoods(item) {
-      await this.modify(item)
-      this.setCartInfo()
+    delOrderList(cartId) {
+      if (cartId) {
+        this.delCartGoods(cartId)
+      } else {
+        this.cartInfo = []
+      }
     },
   },
 }

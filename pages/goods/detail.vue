@@ -235,7 +235,7 @@ export default {
     },
   },
   async created() {
-    await this.setDetailGoodsInfo()
+    await this.setCartInfo()
     await this.getCommentInfoList(this.cartInfo.goods_api_response.id)
     this.isLogin = !!sessionStorage.getItem('accessToken')
   },
@@ -247,15 +247,16 @@ export default {
       'moveToOrder',
       'back',
     ]),
-    ...mapActions('order/cart_register', ['cartRegister']),
+    ...mapActions('orders/cart_register', ['cartRegister']),
     ...mapActions('comments/list', ['getCommentInfoList']),
     ...mapActions('comments/register', ['commentRegister']),
     ...mapActions('comments/detail', ['modify', 'destroy']),
-    async setDetailGoodsInfo() {
+    async setCartInfo() {
       await this.getGoodsDetailInfo(this.$route.query.gdsId)
       this.cartInfo.cart_price = this.goodsDetailInfo.goods_api_response.gds_price
       this.cartInfo.goods_api_response = this.goodsDetailInfo.goods_api_response
       this.cartInfo.user_api_response = this.goodsDetailInfo.user_api_response
+      this.cartInfo.goods_ids = [this.goodsDetailInfo.goods_api_response.id]
     },
     plusQty() {
       this.cartInfo.cart_quantity =

@@ -41,7 +41,7 @@ export default {
     ...mapState('dialog', ['dispConfirmDialog']),
   },
   methods: {
-    ...mapActions('admin/user/register', ['register', 'back']),
+    ...mapActions('admin/users/register', ['register', 'back']),
     ...mapActions('member/register', ['emailCheck']),
     ...mapMutations('dialog', ['closeDialog']),
   },

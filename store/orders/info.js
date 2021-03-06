@@ -35,8 +35,9 @@ export const actions = {
         .then((res) => {
           commit('login/loginSuccess', res.data.data, { root: true })
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },
@@ -59,13 +60,14 @@ export const actions = {
         .post('http://localhost:8080/api/cart/stock-check', reqObj, config)
         .then((res) => {
           if (res.data.result_code === 'OK') {
-            this.$router.push({ name: 'order-summary', params: { orderInfo } })
+            this.$router.push({ name: 'orders-summary', params: { orderInfo } })
           } else {
             commit('setStockError', res.data.description)
           }
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },
@@ -74,7 +76,7 @@ export const actions = {
     this.$router.push({ name: 'goods-list' })
   },
   moveToOrderList() {
-    this.$router.push({ name: 'order-list' })
+    this.$router.push({ name: 'orders-list' })
   },
   back() {
     this.$router.push({ name: 'index' })

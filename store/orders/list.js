@@ -60,15 +60,16 @@ export const actions = {
           config
         )
         .then(() => {
-          dispatch('order/cart_list/getCartList', null, { root: true })
+          dispatch('orders/cart_list/getCartList', null, { root: true })
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },
   moveToOrderInfo(context, cartInfoList) {
-    this.$router.push({ name: 'order-info', params: { cartInfoList } })
+    this.$router.push({ name: 'orders-info', params: { cartInfoList } })
   },
   back() {
     this.$router.push({ name: 'goods-list' })

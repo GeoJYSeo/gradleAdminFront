@@ -134,6 +134,7 @@
         :is-del="isDel"
         :text="btnText"
         @sendEvent="validate"
+        @delData="delData"
         @back="back"
       />
     </v-form>
@@ -225,7 +226,7 @@ export default {
       return this.isDetail && this.isAdmin
     },
     category() {
-      return this.goodsInfo.category_api_response
+      return this.goodsInfo ? this.goodsInfo.category_api_response : []
     },
   },
   async created() {
@@ -236,8 +237,10 @@ export default {
     async setSelCateCodeRef() {
       await this.getCateList()
       this.allCateCodeRefs = this.cateInfo.map((code) => code.cate_code_ref)
-      this.cate_code_ref = this.goodsInfo.category_api_response.cate_code_ref
-      this.selAllCateCodes.push(this.goodsInfo.cate_code)
+      this.cate_code_ref = !Object.values(this.goodsInfo).includes(null)
+        ? this.goodsInfo.category_api_response.cate_code_ref
+        : null
+      this.selAllCateCodes.push(this.goodsInfo.cate_code || '')
     },
     changeAllCateCodeRefs() {
       this.selAllCateCodes = this.cateInfo
@@ -254,6 +257,9 @@ export default {
         this.goodsInfo.del_image_ids = this.del_image_ids
         this.$emit('sendEvent', [this.goodsInfo, this.images])
       }
+    },
+    delData() {
+      this.$emit('destroy', this.goodsInfo.id)
     },
     back() {
       this.$emit('back', this.goodsInfo.id)

@@ -29,8 +29,9 @@ export const actions = {
         .then((res) => {
           this.$router.push({ name: 'admin-goods-cate_list' })
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },

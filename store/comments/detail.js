@@ -31,7 +31,8 @@ export const actions = {
           commit('dialog/setRegComment', 'success', { root: true })
           dispatch('comments/list/getCommentInfoList', null, { root: true })
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           commit('dialog/setRegComment', 'error', { root: true })
         })
     }
@@ -54,7 +55,8 @@ export const actions = {
           commit('dialog/setDelComment', 'success', { root: true })
           dispatch('comments/list/getCommentInfoList', null, { root: true })
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           commit('dialog/setDelComment', 'error', { root: true })
         })
     }

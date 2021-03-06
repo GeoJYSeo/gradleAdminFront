@@ -38,7 +38,8 @@ export const actions = {
         dispatch('getMemberInfo')
         this.$router.push({ name: 'member-detail' })
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err)
         commit('loginError')
       })
   },
@@ -59,8 +60,9 @@ export const actions = {
             commit('setPermission', res.data.data)
           }
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },

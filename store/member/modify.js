@@ -20,8 +20,9 @@ export const actions = {
           commit('login/loginSuccess', res.data.data, { root: true })
           this.$router.push({ name: 'member-detail' })
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },
@@ -47,8 +48,9 @@ export const actions = {
             commit('dialog/setDispConfirmDialog', null, { root: true })
           }
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },

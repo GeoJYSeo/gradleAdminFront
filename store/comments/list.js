@@ -27,8 +27,9 @@ export const actions = {
         .then((res) => {
           commit('setCommentInfoList', res.data.data)
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },
@@ -51,7 +52,8 @@ export const actions = {
           commit('dialog/setRegComment', 'success', { root: true })
           dispatch('getCommentInfoList')
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           commit('dialog/setRegComment', 'error', { root: true })
         })
     }
@@ -74,7 +76,8 @@ export const actions = {
           commit('dialog/setDelComment', 'success', { root: true })
           dispatch('getCommentInfoList')
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           commit('dialog/setDelComment', 'error', { root: true })
         })
     }

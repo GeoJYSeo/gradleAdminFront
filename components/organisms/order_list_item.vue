@@ -63,7 +63,7 @@
             class="orderSatus"
             :block="false"
             text="Cancel"
-            @sendEvent="orderCancel"
+            @sendEvent="cancelOrder"
           />
         </v-card-actions>
       </v-list-item-content>
@@ -94,8 +94,9 @@ export default {
       this.orderDetailInfo.order_status = orderStatus
       this.$emit('changeOrderState', this.orderDetailInfo)
     },
-    orderCancel() {
-      this.$emit('orderCancel')
+    cancelOrder() {
+      this.orderDetailInfo.order_status = 0
+      this.$emit('cancelOrder', this.orderDetailInfo)
     },
   },
 }

@@ -17,12 +17,14 @@ export const actions = {
       .then((res) => {
         commit('setGoodsDetailInfo', res.data.data)
       })
-      .catch(() => {
-        this.$router.push('error')
+      .catch((err) => {
+        console.log(err)
+        this.$router.push({ name: 'error' })
       })
   },
-  moveToOrder(context, cartInfo) {
-    this.$router.push({ name: 'order-list', params: { cartInfo } })
+  moveToOrder({ commit }, cartInfo) {
+    commit('orders/register/setIsDirectOrder', true, { root: true })
+    this.$router.push({ name: 'orders-list', params: { cartInfo } })
   },
   back() {
     this.$router.push({ name: 'goods-list' })

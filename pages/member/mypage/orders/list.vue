@@ -33,7 +33,7 @@
                     <div class="orderItemText">
                       <router-link
                         :to="{
-                          name: 'member-mypage-order-detail',
+                          name: 'member-mypage-orders-detail',
                           query: {
                             orderId: orderInfo.id,
                           },

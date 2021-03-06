@@ -62,8 +62,9 @@ export const actions = {
         .then((res) => {
           commit('setUserInfoList', res.data.data)
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },

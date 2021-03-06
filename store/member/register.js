@@ -35,8 +35,9 @@ export const actions = {
         commit('setHasEmail', res.data)
         commit('dialog/setDispConfirmDialog', null, { root: true })
       })
-      .catch(() => {
-        this.$router.push('error')
+      .catch((err) => {
+        console.log(err)
+        this.$router.push({ name: 'error' })
       })
   },
   register({ commit }, userInfo) {
@@ -50,8 +51,9 @@ export const actions = {
         commit('registeredUser')
         this.$router.push({ name: 'login' })
       })
-      .catch(() => {
-        this.$router.push('error')
+      .catch((err) => {
+        console.log(err)
+        this.$router.push({ name: 'error' })
       })
   },
   moveToModify(context, userInfo) {

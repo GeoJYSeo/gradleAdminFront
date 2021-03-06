@@ -142,14 +142,13 @@ export default {
   methods: {
     ...mapMutations('dialog', ['closeDialog']),
     ...mapActions('goods/list', ['getGoodsList', 'back']),
-    ...mapActions('order/cart_register', ['cartRegister']),
+    ...mapActions('orders/cart_register', ['cartRegister']),
     init() {
       this.keyword = ''
       this.getGoodsList([this.curPageNum, this.keyword])
     },
     setCartInfo(goodsInfo) {
-      const cartInfo = { cart_quantity: 1, goods_api_response: goodsInfo }
-      this.cartRegister(cartInfo)
+      this.cartRegister({ cart_quantity: 1, goods_api_response: goodsInfo })
     },
   },
 }

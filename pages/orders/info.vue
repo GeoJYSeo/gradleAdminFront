@@ -37,21 +37,19 @@
                       <v-list-item-content>
                         <v-list-item-title class="headline mb-1">
                           <v-row>
-                            <v-col style="text-align: right"
-                              >CART SUMMARY</v-col
-                            >
+                            <v-col align="center">CART SUMMARY</v-col>
                           </v-row>
                         </v-list-item-title>
                         <v-list-item-subtitle>
                           <v-row>
                             <v-col>TOTAL</v-col>
-                            <v-col style="text-align: right">{{
+                            <v-col align="end">{{
                               Number(totalPrice).toFixed(2)
                             }}</v-col>
                           </v-row>
                           <v-row v-if="orderInfo.payment_type">
                             <v-col>Payment</v-col>
-                            <v-col style="text-align: right">{{
+                            <v-col align="end">{{
                               orderInfo.payment_type
                             }}</v-col>
                           </v-row>
@@ -129,9 +127,9 @@ export default {
     }
   },
   computed: {
-    ...mapState('order/cart_list', ['cartInfoList']),
+    ...mapState('orders/cart_list', ['cartInfoList']),
     ...mapState('login', ['userInfo']),
-    ...mapState('order/info', ['stockError', 'dispConfirmDialog']),
+    ...mapState('orders/info', ['stockError', 'dispConfirmDialog']),
     totalQuantity() {
       return this.cartInfo
         .map((cart) => cart.cart_quantity)
@@ -148,10 +146,10 @@ export default {
     await this.hasUserAddress()
   },
   methods: {
-    ...mapMutations('order/info', ['closeOutOfStock']),
+    ...mapMutations('orders/info', ['closeOutOfStock']),
     ...mapActions('login', ['getMemberInfo']),
-    ...mapActions('order/cart_list', ['getCartList']),
-    ...mapActions('order/info', [
+    ...mapActions('orders/cart_list', ['getCartList']),
+    ...mapActions('orders/info', [
       'orderUserInfoModify',
       'moveToOrderSum',
       'moveToGoodsList',

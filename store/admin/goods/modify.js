@@ -41,8 +41,9 @@ export const actions = {
             query: { gdsId: goodsInfo[0].id },
           })
         })
-        .catch(() => {
-          this.$router.push('error')
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({ name: 'error' })
         })
     }
   },

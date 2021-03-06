@@ -25,8 +25,9 @@ export const actions = {
       .then((res) => {
         commit('setGoodsInfo', res.data)
       })
-      .catch(() => {
-        this.$router.push('error')
+      .catch((err) => {
+        console.log(err)
+        this.$router.push({ name: 'error' })
       })
   },
   back() {
