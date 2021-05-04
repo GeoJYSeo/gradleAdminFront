@@ -15,7 +15,7 @@
                     v-for="(image, index) in goodsDetailInfo.goods_api_response
                       .goods_image_api_response_list"
                     :key="index"
-                    :src="require(`@/static/${image.gds_img}`)"
+                    :src="require(`../../../uploadedImages/${image.gds_img}`)"
                     style="width: 1000px"
                     reverse-transition="fade-transition"
                     transition="fade-transition"
@@ -27,9 +27,9 @@
                   <v-card color="#000000" width="360">
                     <v-row justify="center">
                       <div class="pt-6">
-                        <img
+                        <v-img
                           :src="
-                            require(`@/static/${goodsDetailInfo.goods_api_response.goods_image_api_response_list[0].gds_thumb_img}`)
+                            require(`../../../uploadedImages/${goodsDetailInfo.goods_api_response.goods_image_api_response_list[0].gds_thumb_img}`)
                           "
                         />
                       </div>
@@ -201,19 +201,17 @@ export default {
     ...mapState('dialog', [
       'dispConfirmDialog',
       'dispCommentDialog',
-      'addCart',
-      'regComment',
-      'delComment',
+      'result',
       'dialogContents',
     ]),
     ...mapState('comments/list', ['commentInfoList', 'commentLabel']),
     ...mapState('comments/detail', ['detailComment']),
     dispDialogContents() {
-      return this.addCart === 'success'
+      return this.result === 'cart'
         ? this.dialogContents[0]
-        : this.regComment === 'success'
+        : this.result === 'regComment'
         ? this.dialogContents[1]
-        : this.delComment === 'success'
+        : this.result === 'delComment'
         ? this.dialogContents[3]
         : this.dialogContents[4]
     },

@@ -19,6 +19,5 @@ export default {
     authMiddleware.loginAuthentication(),
     authMiddleware.authentication(),
   ],
-  components: {},
 }
 </script>

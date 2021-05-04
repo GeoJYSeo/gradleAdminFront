@@ -22,7 +22,7 @@
               >
                 <v-img
                   :src="
-                    require(`@/static/${commentItem.goods_api_response.goods_image_api_response_list[0].gds_thumb_img}`)
+                    require(`../../../../uploadedImages/${commentItem.goods_api_response.goods_image_api_response_list[0].gds_thumb_img}`)
                   "
                   contain
                   height="200"

@@ -177,7 +177,7 @@
           />
         </v-col>
       </v-row>
-      <v-row v-if="isAdmin">
+      <v-row v-if="!isNotAdmin">
         <v-col>
           <v-card color="#263238">
             <v-card-title>Permission</v-card-title>
@@ -200,7 +200,7 @@
       <ButtonForm
         :is-del="isDel"
         :text="btnText"
-        :is-email-check="isEmailCheck"
+        :is-btn-disabled="isBtnDisabled"
         @sendEvent="validate"
         @back="back"
       />
@@ -235,11 +235,11 @@ export default {
       type: String,
       required: true,
     },
-    isAdmin: {
+    isNotAdmin: {
       type: Boolean,
       required: false,
       default: () => {
-        return false
+        return true
       },
     },
     isMod: {
@@ -315,14 +315,14 @@ export default {
     userInfo() {
       return this.deUserInfo || this.modUserInfo || this.chdUserInfo
     },
-    isEmailCheck() {
-      return !!this.btnDisabled
+    isBtnDisabled() {
+      return !!this.btnDisabled || !this.isNotAdmin
     },
     isDetail() {
       return !!this.deUserInfo
     },
     isDel() {
-      return this.isDetail && this.isAdmin
+      return this.isDetail && this.isNotAdmin
     },
   },
   async created() {
@@ -363,7 +363,10 @@ export default {
     },
     hasPasswdCheck() {
       if (this.$refs.chkPwdForm.validate()) {
-        this.$emit('hasPasswdCheck', this.userInfo.passwd)
+        this.$emit('hasPasswdCheck', {
+          id: this.userInfo.id,
+          passwd: this.userInfo.passwd,
+        })
       }
     },
     back() {

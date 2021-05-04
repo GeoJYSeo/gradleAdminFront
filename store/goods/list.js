@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export const state = () => ({
   goodsInfoList: null,
   pagination: null,
@@ -16,18 +14,12 @@ export const mutations = {
 
 export const actions = {
   async getGoodsList({ commit }, params) {
-    await axios
+    await this.$axios
       .get(
-        `http://localhost:8080/api/goods?page=${--params[0]}&keyword=${
-          params[1] ? params[1] : ''
-        }`
+        `api/goods?page=${--params[0]}&keyword=${params[1] ? params[1] : ''}`
       )
       .then((res) => {
         commit('setGoodsInfo', res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-        this.$router.push({ name: 'error' })
       })
   },
   back() {

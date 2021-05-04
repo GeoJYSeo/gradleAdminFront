@@ -1,6 +1,3 @@
-import axios from 'axios'
-import auth from '@/middleware/auth'
-
 export const state = () => ({
   cateInfo: null,
   headers: [
@@ -32,22 +29,8 @@ export const mutations = {
 
 export const actions = {
   async getCateList({ commit }) {
-    const accessToken = auth.getAccessToken()
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      await axios
-        .get('http://localhost:8080/api/admin/category', config)
-        .then((res) => {
-          commit('setCateInfo', res.data.data)
-        })
-        .catch((err) => {
-          console.log(err)
-          this.$router.push({ name: 'error' })
-        })
-    }
+    await this.$axios.get('api/admin/category').then((res) => {
+      commit('setCateInfo', res.data.data)
+    })
   },
 }

@@ -1,4 +1,3 @@
-import axios from 'axios'
 import auth from '@/middleware/auth'
 
 export const state = () => ({
@@ -62,81 +61,52 @@ export const mutations = {
 export const actions = {
   async getCartList({ commit }) {
     const userId = auth.getUserId()
-    const accessToken = auth.getAccessToken()
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      await axios
-        .get(`http://localhost:8080/api/cart?user_id=${userId}`, config)
-        .then((res) => {
-          commit('setCartInfoList', res.data.data)
-        })
-        .catch((err) => {
-          console.log(err)
-          // this.$router.push({ name: 'error' })
-        })
-    }
+    await this.$axios
+      .get(`api/cart?user-id=${userId}`)
+      .then((res) => {
+        commit('setCartInfoList', res.data.data)
+      })
+      .catch((err) => {
+        console.log(err)
+        // this.$router.push({ name: 'error' })
+      })
   },
   async modify({ dispatch }, cartInfo) {
-    console.log(cartInfo)
-    const accessToken = auth.getAccessToken()
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      const reqObj = {
-        transaction_time: new Date(),
-        data: {
-          id: cartInfo.id,
-          cart_quantity: cartInfo.cart_quantity,
-          user_id: cartInfo.user_api_response.id,
-          goods_ids: [cartInfo.goods_api_response.id],
-        },
-      }
-      await axios
-        .put(`http://localhost:8080/api/cart/`, reqObj, config)
-        .then((res) => {
-          // const targetIndex = state.cartInfoList
-          //   .map((cart) => cart.id)
-          //   .indexOf(cartInfo.id)
-          // state.cartInfoList[targetIndex] = res.data.data
-          // commit('setCartInfoList', state.cartInfoList)
-          dispatch('getCartList')
-        })
-        .catch((err) => {
-          console.log(err)
-          this.$router.push({ name: 'error' })
-        })
+    const reqObj = {
+      transaction_time: new Date(),
+      data: {
+        id: cartInfo.id,
+        cart_quantity: cartInfo.cart_quantity,
+        user_id: cartInfo.user_api_response.id,
+        goods_ids: [cartInfo.goods_api_response.id],
+      },
     }
+    await this.$axios
+      .put('api/cart/', reqObj)
+      .then(() => {
+        // const targetIndex = state.cartInfoList
+        //   .map((cart) => cart.id)
+        //   .indexOf(cartInfo.id)
+        // state.cartInfoList[targetIndex] = res.data.data
+        // commit('setCartInfoList', state.cartInfoList)
+        dispatch('getCartList')
+      })
+      .catch((err) => {
+        console.log(err)
+        this.$router.push({ name: 'error' })
+      })
   },
   async destroy({ dispatch }, cartInfo) {
-    console.log(cartInfo)
     const userId = cartInfo.user_api_response.id
-    const accessToken = auth.getAccessToken()
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      await axios
-        .delete(
-          `http://localhost:8080/api/cart/${cartInfo.id}?user_id=${userId}`,
-          config
-        )
-        .then((res) => {
-          dispatch('getCartList')
-        })
-        .catch((err) => {
-          console.log(err)
-          this.$router.push({ name: 'error' })
-        })
-    }
+    await this.$axios
+      .delete(`api/cart/${cartInfo.id}?user-id=${userId}`)
+      .then((res) => {
+        dispatch('getCartList')
+      })
+      .catch((err) => {
+        console.log(err)
+        this.$router.push({ name: 'error' })
+      })
   },
   moveToOrderSum(context, orderInfo) {
     this.$router.push({ name: 'orders-summary', params: { orderInfo } })

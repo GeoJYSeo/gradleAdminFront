@@ -46,7 +46,7 @@
                       >
                         <v-img
                           :src="
-                            require(`@/static/${item.goods_api_response.goods_image_api_response_list[0].gds_thumb_img}`)
+                            require(`../../../../uploadedImages/${item.goods_api_response.goods_image_api_response_list[0].gds_thumb_img}`)
                           "
                           contain
                           height="200"
@@ -121,8 +121,7 @@ export default {
     ...mapState('dialog', [
       'dispConfirmDialog',
       'dispCommentDialog',
-      'regComment',
-      'delComment',
+      'result',
       'dialogContents',
     ]),
     ...mapState('admin/comments/list', [
@@ -133,9 +132,9 @@ export default {
     ]),
     ...mapState('admin/comments/detail', ['detailComment']),
     dispDialogContents() {
-      return this.regComment === 'success'
+      return this.result === 'regComment'
         ? this.dialogContents[1]
-        : this.delComment === 'success'
+        : this.result === 'delComment'
         ? this.dialogContents[3]
         : this.dialogContents[4]
     },

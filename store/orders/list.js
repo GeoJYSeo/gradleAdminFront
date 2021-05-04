@@ -1,4 +1,3 @@
-import axios from 'axios'
 import auth from '@/middleware/auth'
 
 export const state = () => ({
@@ -47,26 +46,15 @@ export const state = () => ({
 
 export const actions = {
   async delCartGoods({ dispatch }, cartId) {
-    const accessToken = auth.getAccessToken()
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      await axios
-        .delete(
-          `http://localhost:8080/api/cart/${cartId}?userId=${auth.getUserId()}`,
-          config
-        )
-        .then(() => {
-          dispatch('orders/cart_list/getCartList', null, { root: true })
-        })
-        .catch((err) => {
-          console.log(err)
-          this.$router.push({ name: 'error' })
-        })
-    }
+    await this.$axios
+      .delete(`api/cart/${cartId}?userId=${auth.getUserId()}`)
+      .then(() => {
+        dispatch('orders/cart_list/getCartList', null, { root: true })
+      })
+      .catch((err) => {
+        console.log(err)
+        this.$router.push({ name: 'error' })
+      })
   },
   moveToOrderInfo(context, cartInfoList) {
     this.$router.push({ name: 'orders-info', params: { cartInfoList } })

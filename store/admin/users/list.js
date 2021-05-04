@@ -1,6 +1,3 @@
-import axios from 'axios'
-import auth from '@/middleware/auth'
-
 export const state = () => ({
   userInfoList: null,
   headers: [
@@ -47,26 +44,11 @@ export const mutations = {
 
 export const actions = {
   async getUserList({ commit }, params) {
-    const accessToken = auth.getAccessToken()
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      await axios
-        .get(
-          `http://localhost:8080/api/admin/user?searchKind=${params[0]}&keyword=${params[1]}`,
-          config
-        )
-        .then((res) => {
-          commit('setUserInfoList', res.data.data)
-        })
-        .catch((err) => {
-          console.log(err)
-          this.$router.push({ name: 'error' })
-        })
-    }
+    await this.$axios
+      .get(`api/admin/user?searchKind=${params[0]}&keyword=${params[1]}`)
+      .then((res) => {
+        commit('setUserInfoList', res.data.data)
+      })
   },
   moveToDetail(context, userId) {
     this.$router.push({

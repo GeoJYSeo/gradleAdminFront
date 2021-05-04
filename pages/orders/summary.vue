@@ -67,9 +67,9 @@ export default {
     }
   },
   computed: {
-    ...mapState('dialog', ['dispConfirmDialog', 'regOrder', 'dialogContents']),
+    ...mapState('dialog', ['dispConfirmDialog', 'result', 'dialogContents']),
     dispDialogContents() {
-      return this.regOrder === 'success'
+      return this.result === 'order'
         ? this.dialogContents[2]
         : this.dialogContents[4]
     },
@@ -86,10 +86,10 @@ export default {
       if (!this.orderInfo) this.moveToGoodsList()
     },
     async confirmOrder() {
-      if (this.regOrder === 'success') {
+      if (this.result === 'order') {
         this.closeDialog()
         await this.moveToMyOrderList()
-      } else if (this.regOrder === 'error') {
+      } else if (this.result === 'error') {
         this.closeDialog()
       }
     },

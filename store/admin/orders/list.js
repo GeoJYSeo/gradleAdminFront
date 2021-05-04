@@ -1,6 +1,3 @@
-import axios from 'axios'
-import auth from '@/middleware/auth'
-
 export const state = () => ({
   orderInfoList: null,
   headers: [
@@ -45,26 +42,12 @@ export const mutations = {
 
 export const actions = {
   async getOrderList({ commit }, params) {
-    const accessToken = auth.getAccessToken()
     // const accessToken = rootState.login.accessToken
     // const accessToken = JSON.parse(sessionStorage.getItem('auth-key')).login
     //   .accessToken
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      await axios
-        .get(`http://localhost:8080/api/admin/order`, config)
-        .then((res) => {
-          commit('setOrderInfo', res.data.data)
-        })
-        .catch((err) => {
-          console.log(err)
-          this.$router.push({ name: 'error' })
-        })
-    }
+    await this.$axios.get('api/admin/order').then((res) => {
+      commit('setOrderInfo', res.data.data)
+    })
   },
   moveToDetail(context, orderId) {
     this.$router.push({ name: 'admin-orders-detail', query: { orderId } })

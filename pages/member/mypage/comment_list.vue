@@ -52,16 +52,15 @@ export default {
     ...mapState('dialog', [
       'dispConfirmDialog',
       'dispCommentDialog',
-      'regComment',
-      'delComment',
+      'result',
       'dialogContents',
     ]),
     ...mapState('comments/list', ['commentInfoList', 'commentLabel']),
     ...mapState('comments/detail', ['detailComment']),
     dispDialogContents() {
-      return this.regComment === 'success'
+      return this.result === 'regComment'
         ? this.dialogContents[1]
-        : this.delComment === 'success'
+        : this.result === 'delComment'
         ? this.dialogContents[3]
         : this.dialogContents[4]
     },

@@ -1,6 +1,3 @@
-import axios from 'axios'
-import auth from '@/middleware/auth'
-
 export const state = () => ({
   goodsdetailInfo: null,
 })
@@ -13,42 +10,14 @@ export const mutations = {
 
 export const actions = {
   async getGoodsDetailInfo({ commit }, gdsId) {
-    const accessToken = auth.getAccessToken()
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      await axios
-        .get(`http://localhost:8080/api/admin/goods/${gdsId}`, config)
-        .then((res) => {
-          commit('setGoodsDetailInfo', res.data.data)
-        })
-        .catch((err) => {
-          console.log(err)
-          this.$router.push({ name: 'error' })
-        })
-    }
+    await this.$axios.get(`api/admin/goods/${gdsId}`).then((res) => {
+      commit('setGoodsDetailInfo', res.data.data)
+    })
   },
   async destroy(context, gdsId) {
-    const accessToken = auth.getAccessToken()
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      await axios
-        .delete(`http://localhost:8080/api/admin/goods/${gdsId}`, config)
-        .then((res) => {
-          this.$router.push({ name: 'admin-goods-list' })
-        })
-        .catch((err) => {
-          console.log(err)
-          this.$router.push({ name: 'error' })
-        })
-    }
+    await this.$axios.delete(`api/admin/goods/${gdsId}`).then((res) => {
+      this.$router.push({ name: 'admin-goods-list' })
+    })
   },
   moveToModify(context, goodsdetailInfo) {
     this.$router.push({

@@ -9,7 +9,7 @@
           <ProgressLiner v-if="!userDetailInfo" />
           <UserRegisterForm
             v-else
-            :is-admin="true"
+            :is-admin="isNotAdmin"
             :de-user-info="userDetailInfo"
             btn-text="modify"
             @sendEvent="moveToModify"
@@ -30,7 +30,7 @@ import ProgressLiner from '@/components/molecules/progress_liner'
 export default {
   middleware: [
     authMiddleware.loginAuthentication(),
-    authMiddleware.adminAuthentication(),
+    authMiddleware.authentication(),
   ],
   components: { UserRegisterForm, ProgressLiner },
   data() {
@@ -40,6 +40,9 @@ export default {
   },
   computed: {
     ...mapState('admin/users/detail', ['userDetailInfo']),
+    isNotAdmin() {
+      return this.userDetailInfo.access !== 'ADMINISTOR'
+    },
   },
   async created() {
     await this.setSelUserId()

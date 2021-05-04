@@ -1,6 +1,3 @@
-import axios from 'axios'
-import auth from '@/middleware/auth'
-
 export const state = () => ({
   userDetailInfo: null,
 })
@@ -16,42 +13,14 @@ export const actions = {
     sessionStorage.setItem('selUserId', selUserId)
   },
   async getUserDetailInfo({ commit }, selUserId) {
-    const accessToken = auth.getAccessToken()
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      await axios
-        .get(`http://localhost:8080/api/admin/user/${selUserId}`, config)
-        .then((res) => {
-          commit('setDetailedUser', res.data.data)
-        })
-        .catch((err) => {
-          console.log(err)
-          this.$router.push({ name: 'error' })
-        })
-    }
+    await this.$axios.get(`api/admin/user/${selUserId}`).then((res) => {
+      commit('setDetailedUser', res.data.data)
+    })
   },
   async destroy(context, selUserId) {
-    const accessToken = auth.getAccessToken()
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      await axios
-        .delete(`http://localhost:8080/api/admin/user/${selUserId}`, config)
-        .then((res) => {
-          this.$router.push({ name: 'admin-users-list' })
-        })
-        .catch((err) => {
-          console.log(err)
-          this.$router.push({ name: 'error' })
-        })
-    }
+    await this.$axios.delete(`api/admin/user/${selUserId}`).then(() => {
+      this.$router.push({ name: 'admin-users-list' })
+    })
   },
   moveToModify(context, userDetailInfo) {
     this.$router.push({

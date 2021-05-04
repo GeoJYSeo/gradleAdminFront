@@ -1,5 +1,5 @@
-import axios from 'axios'
 import jwtDecode from 'jwt-decode'
+import auth from '@/middleware/auth'
 
 export const state = () => ({
   userInfo: null,
@@ -30,30 +30,23 @@ export const mutations = {
 }
 
 export const actions = {
-  login({ dispatch, commit }, loginObj) {
-    axios
-      .post('http://localhost:8080/api/login/access-token', loginObj)
+  async login({ dispatch, commit }, loginObj) {
+    await this.$axios
+      .post('api/login/access-token', loginObj)
       .then((res) => {
         sessionStorage.setItem('accessToken', res.data.access_token)
         dispatch('getMemberInfo')
         this.$router.push({ name: 'member-detail' })
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         commit('loginError')
       })
   },
   getMemberInfo({ state, commit }) {
     if (sessionStorage.getItem('accessToken') && !state.userInfo) {
-      const accessToken = sessionStorage.getItem('accessToken')
-      const userId = jwtDecode(accessToken).userId
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      axios
-        .get(`http://localhost:8080/api/user/${userId}`, config)
+      const userId = jwtDecode(auth.getAccessToken()).userId
+      this.$axios
+        .get(`http://localhost:8080/api/user/${userId}`)
         .then((res) => {
           if (res.data.result_code === 'OK') {
             commit('loginSuccess', res.data.data)

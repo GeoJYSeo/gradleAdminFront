@@ -27,9 +27,9 @@
                     :footer-props="footerProps"
                   >
                     <template v-slot:[`item.image`]="{ item }">
-                      <img
+                      <v-img
                         :src="
-                          require(`@/static/${item.goods_api_response.goods_image_api_response_list[0].gds_thumb_img}`)
+                          require(`../../../uploadedImages/${item.goods_api_response.goods_image_api_response_list[0].gds_thumb_img}`)
                         "
                         height="200"
                         width="300"

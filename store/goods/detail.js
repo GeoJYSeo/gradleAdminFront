@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export const state = () => ({
   goodsDetailInfo: null,
 })
@@ -12,15 +10,9 @@ export const mutations = {
 
 export const actions = {
   async getGoodsDetailInfo({ commit }, gdsId) {
-    await axios
-      .get(`http://localhost:8080/api/goods/${gdsId}`)
-      .then((res) => {
-        commit('setGoodsDetailInfo', res.data.data)
-      })
-      .catch((err) => {
-        console.log(err)
-        this.$router.push({ name: 'error' })
-      })
+    await this.$axios.get(`api/goods/${gdsId}`).then((res) => {
+      commit('setGoodsDetailInfo', res.data.data)
+    })
   },
   moveToOrder({ commit }, cartInfo) {
     commit('orders/register/setIsDirectOrder', true, { root: true })

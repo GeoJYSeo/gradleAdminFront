@@ -1,6 +1,3 @@
-import axios from 'axios'
-import auth from '@/middleware/auth'
-
 export const state = () => ({
   commentInfoList: [],
   commentLabel: 'to write comment',
@@ -42,23 +39,15 @@ export const mutations = {
 }
 
 export const actions = {
-  async getCommentInfoList({ commit }, gdsId) {
-    const accessToken = auth.getAccessToken()
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      await axios
-        .get(`http://localhost:8080/api/admin/comment`, config)
-        .then((res) => {
-          commit('setCommentInfoList', res.data.data)
-        })
-        .catch((err) => {
-          console.log(err)
-          this.$router.push({ name: 'error' })
-        })
-    }
+  async getCommentInfoList({ commit }) {
+    await this.$axios
+      .get('api/admin/comment')
+      .then((res) => {
+        commit('setCommentInfoList', res.data.data)
+      })
+      .catch((err) => {
+        console.log(err)
+        this.$router.push({ name: 'error' })
+      })
   },
 }

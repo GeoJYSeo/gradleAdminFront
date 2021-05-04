@@ -2,7 +2,7 @@
   <v-row>
     <v-col>
       <CompButton
-        :disabled="isEmailCheck"
+        :disabled="isBtnDisabled"
         :text="text"
         @sendEvent="sendEvent"
       />
@@ -32,7 +32,7 @@ export default {
         return false
       },
     },
-    isEmailCheck: {
+    isBtnDisabled: {
       type: Boolean,
       default: () => {
         return false

@@ -1,4 +1,3 @@
-import axios from 'axios'
 import auth from '@/middleware/auth'
 
 export const state = () => ({
@@ -14,52 +13,30 @@ export const mutations = {
 export const actions = {
   async modify({ commit, dispatch }, commentInfo) {
     commentInfo.user_id = auth.getUserId()
-    const accessToken = auth.getAccessToken()
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      const reqObj = {
-        transaction_time: new Date(),
-        data: commentInfo,
-      }
-      await axios
-        .put(`http://localhost:8080/api/admin/comment/`, reqObj, config)
-        .then(() => {
-          commit('dialog/setRegComment', 'success', { root: true })
-          dispatch('admin/comments/list/getCommentInfoList', null, {
-            root: true,
-          })
-        })
-        .catch((err) => {
-          console.log(err)
-          commit('dialog/setRegComment', 'error', { root: true })
-        })
+    const reqObj = {
+      transaction_time: new Date(),
+      data: commentInfo,
     }
+    await this.$axios.put('api/admin/comment/', reqObj).then((res) => {
+      if (res.data.result_code === 'OK') {
+        commit('dialog/setResult', 'regComment', { root: true })
+        dispatch('admin/comments/list/getCommentInfoList', null, {
+          root: true,
+        })
+      }
+    })
   },
   async destroy({ commit, dispatch }, comId) {
-    const accessToken = auth.getAccessToken()
-    if (accessToken) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-      await axios
-        .delete(`http://localhost:8080/api/admin/comment/${comId}`, config)
-        .then(() => {
-          commit('dialog/setDelComment', 'success', { root: true })
+    await this.$axios
+      .delete(`http://localhost:8080/api/admin/comment/${comId}`)
+      .then((res) => {
+        if (res.data.result_code === 'OK') {
+          commit('dialog/setResult', 'delComment', { root: true })
           dispatch('admin/comments/list/getCommentInfoList', null, {
             root: true,
           })
-        })
-        .catch((err) => {
-          console.log(err)
-          commit('dialog/setDelComment', 'error', { root: true })
-        })
-    }
+        }
+      })
   },
   back() {
     this.$router.push({ name: 'admin' })

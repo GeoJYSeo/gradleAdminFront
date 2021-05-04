@@ -2,10 +2,11 @@ export const state = () => ({
   dispConfirmDialog: false,
   dispCommentDialog: false,
   dispChgPwdDialog: false,
-  addCart: null,
-  regOrder: null,
-  regComment: null,
-  delComment: null,
+  result: null,
+  // addCart: null,
+  // regOrder: null,
+  // regComment: null,
+  // delComment: null,
   dialogContents: [
     {
       btn_color: '#1E88E5',
@@ -45,22 +46,22 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setAddCart(state, result) {
-    state.addCart = result
+  setResult(state, result) {
+    state.result = result
     state.dispConfirmDialog = true
   },
-  setRegOrder(state, result) {
-    state.regOrder = result
-    state.dispConfirmDialog = true
-  },
-  setRegComment(state, result) {
-    state.regComment = result
-    state.dispConfirmDialog = true
-  },
-  setDelComment(state, result) {
-    state.delComment = result
-    state.dispConfirmDialog = true
-  },
+  // setRegOrder(state, result) {
+  //   state.regOrder = result
+  //   state.dispConfirmDialog = true
+  // },
+  // setRegComment(state, result) {
+  //   state.regComment = result
+  //   state.dispConfirmDialog = true
+  // },
+  // setDelComment(state, result) {
+  //   state.delComment = result
+  //   state.dispConfirmDialog = true
+  // },
   setDispConfirmDialog(state) {
     state.dispConfirmDialog = true
   },
