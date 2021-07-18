@@ -15,7 +15,7 @@
                     v-for="(image, index) in goodsDetailInfo.goods_api_response
                       .goods_image_api_response_list"
                     :key="index"
-                    :src="require(`../../../uploadedImages/${image.gds_img}`)"
+                    :src="`${image.img_name}`"
                     style="width: 1000px"
                     reverse-transition="fade-transition"
                     transition="fade-transition"
@@ -28,9 +28,7 @@
                     <v-row justify="center">
                       <div class="pt-6">
                         <v-img
-                          :src="
-                            require(`../../../uploadedImages/${goodsDetailInfo.goods_api_response.goods_image_api_response_list[0].gds_thumb_img}`)
-                          "
+                          :src="`${goodsDetailInfo.goods_api_response.goods_image_api_response_list[0].img_name}`"
                         />
                       </div>
                     </v-row>

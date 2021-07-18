@@ -74,4 +74,5 @@ export default {
       poll: true,
     },
   },
+  generate: { fallback: '404.html' },
 }

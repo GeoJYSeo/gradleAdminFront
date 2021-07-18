@@ -27,16 +27,14 @@ export const actions = {
     })
   },
   async destroy({ commit, dispatch }, comId) {
-    await this.$axios
-      .delete(`http://localhost:8080/api/admin/comment/${comId}`)
-      .then((res) => {
-        if (res.data.result_code === 'OK') {
-          commit('dialog/setResult', 'delComment', { root: true })
-          dispatch('admin/comments/list/getCommentInfoList', null, {
-            root: true,
-          })
-        }
-      })
+    await this.$axios.delete(`api/admin/comment/${comId}`).then((res) => {
+      if (res.data.result_code === 'OK') {
+        commit('dialog/setResult', 'delComment', { root: true })
+        dispatch('admin/comments/list/getCommentInfoList', null, {
+          root: true,
+        })
+      }
+    })
   },
   back() {
     this.$router.push({ name: 'admin' })

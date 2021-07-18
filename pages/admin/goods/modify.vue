@@ -12,7 +12,7 @@
               <v-carousel-item
                 v-for="(image, index) in imagesInfo"
                 :key="index"
-                :src="require(`../../../../uploadedImages/${image.gds_img}`)"
+                :src="`${image.img_name}`"
                 reverse-transition="fade-transition"
                 transition="fade-transition"
               ></v-carousel-item>

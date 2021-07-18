@@ -46,7 +46,7 @@ export const actions = {
     if (sessionStorage.getItem('accessToken') && !state.userInfo) {
       const userId = jwtDecode(auth.getAccessToken()).userId
       this.$axios
-        .get(`http://localhost:8080/api/user/${userId}`)
+        .get(`api/user/${userId}`)
         .then((res) => {
           if (res.data.result_code === 'OK') {
             commit('loginSuccess', res.data.data)

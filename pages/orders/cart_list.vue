@@ -28,9 +28,7 @@
                   >
                     <template v-slot:[`item.image`]="{ item }">
                       <v-img
-                        :src="
-                          require(`../../../uploadedImages/${item.goods_api_response.goods_image_api_response_list[0].gds_thumb_img}`)
-                        "
+                        :src="`${item.goods_api_response.goods_image_api_response_list[0].img_name}`"
                         height="200"
                         width="300"
                       />

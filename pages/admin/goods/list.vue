@@ -47,9 +47,7 @@
                           }"
                         >
                           <v-img
-                            :src="
-                              require(`../../../../uploadedImages/${goodsInfo.goods_image_api_response_list[0].gds_thumb_img}`)
-                            "
+                            :src="`${goodsInfo.goods_image_api_response_list[0].img_name}`"
                             contain
                             height="200"
                             width="300"
