@@ -2,7 +2,7 @@ import auth from '@/middleware/auth'
 
 export default ({ $axios, redirect, store }) => {
   // $axios.setBaseURL(process.env.API_BASE_URL)
-  $axios.setBaseURL('https://34.84.53.56')
+  $axios.setBaseURL('http://34.84.53.56')
 
   $axios.onRequest((config) => {
     const accessToken = auth.getAccessToken()
