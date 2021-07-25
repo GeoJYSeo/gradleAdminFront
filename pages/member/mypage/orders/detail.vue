@@ -31,7 +31,9 @@
                   v-for="(orderDetailInfo,
                   index) in orderDetailInfoList.order_detail_api_response_list"
                   :key="index"
+                  :order-id="orderDetailInfoList.id"
                   :order-detail-info="orderDetailInfo"
+                  @changeGoodsKeyState="changeGoodsKeyState"
                 />
               </v-card>
             </v-row>
@@ -90,6 +92,7 @@ export default {
     ...mapActions('member/mypage/orders/detail', [
       'getOrderDetailInfoList',
       'cancelOrder',
+      'changeGoodsKeyState',
       'back',
     ]),
   },

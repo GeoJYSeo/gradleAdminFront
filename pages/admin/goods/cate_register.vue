@@ -45,13 +45,15 @@ export default {
     ...mapState('admin/goods/cate_list', ['cateInfo', 'headers']),
   },
   created() {
-    if (!this.cateInfo) this.setCateList()
+    this.setCateList()
   },
   methods: {
     ...mapActions('admin/goods/cate_list', ['getCateList']),
     async setCateList() {
-      await this.getCateList()
-      this.allCateCodes = this.cateInfo.map((code) => code.cate_code)
+      if (!this.cateInfo) await this.getCateList()
+      this.allCateCodes = this.cateInfo
+        .filter((cate) => cate.cate_code !== '0')
+        .map((cate) => cate.cate_code)
     },
   },
 }

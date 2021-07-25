@@ -43,6 +43,11 @@ export const actions = {
       params: { userInfo },
     })
   },
+  async destroy({ dispatch }, id) {
+    await this.$axios.delete(`api/user/${id}`).then(() => {
+      dispatch('login/getMemberInfo', null, { root: true })
+    })
+  },
   back() {
     this.$router.push({ name: 'index' })
   },

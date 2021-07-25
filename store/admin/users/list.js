@@ -20,6 +20,11 @@ export const state = () => ({
       groupable: false,
     },
     {
+      text: 'Status',
+      align: 'right',
+      value: 'status',
+    },
+    {
       text: 'Access',
       align: 'right',
       value: 'str_access',

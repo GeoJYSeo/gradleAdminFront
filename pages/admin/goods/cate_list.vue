@@ -13,11 +13,13 @@
           <ProgressLiner v-if="!cateInfo" />
           <div v-else class="pa-4">
             <template>
-              <v-data-table
-                :headers="headers"
-                :items="cateInfo"
-                show-group-by
-              ></v-data-table>
+              <v-data-table :headers="headers" :items="cateInfo" show-group-by>
+                <template v-slot:[`item.delCateGoods`]="{ item }">
+                  <v-icon @click="destroy(item.id)"
+                    >mdi-delete-circle-outline</v-icon
+                  >
+                </template>
+              </v-data-table>
             </template>
           </div>
         </v-card>
@@ -44,7 +46,7 @@ export default {
     await this.getCateList()
   },
   methods: {
-    ...mapActions('admin/goods/cate_list', ['getCateList']),
+    ...mapActions('admin/goods/cate_list', ['getCateList', 'destroy']),
   },
 }
 </script>

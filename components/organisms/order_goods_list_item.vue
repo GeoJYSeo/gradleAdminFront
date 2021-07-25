@@ -50,19 +50,61 @@
                 {{ Number(orderDetailInfo.goods_total_price).toFixed(2) }}
               </div>
             </v-list-item-title>
+            <h3>Goods Key</h3>
+            <v-list-item-title class="mb-4">
+              <div
+                v-for="goods_key in orderDetailInfo.goods_key_api_response_list"
+                :key="goods_key.id"
+                class="orderGoodsItemText mb-4"
+              >
+                <div v-if="!!goods_key.status" class="orderGoodsItemText">
+                  <div v-if="goods_key.status === 'CANCELLED'">
+                    {{ goods_key.status }}
+                  </div>
+                  <div v-else>
+                    {{ goods_key.reg_key }}
+                  </div>
+                </div>
+                <div v-else>
+                  <CompButton
+                    class="orderSatus"
+                    :block="false"
+                    text="Click to REVEAL"
+                    @sendEvent="changeGoodsKeyState(goods_key.id)"
+                  />
+                </div>
+              </div>
+            </v-list-item-title>
           </v-col>
         </v-row>
       </v-list-item-content>
     </v-list-item>
+    {{ orderDetailInfo.goods_key_api_response_list }}
   </v-card>
 </template>
 
 <script>
+import CompButton from '@/components/molecules/button'
+
 export default {
+  components: { CompButton },
   props: {
     orderDetailInfo: {
       type: Object,
       required: true,
+    },
+    orderId: {
+      type: Number,
+      required: true,
+    },
+  },
+  methods: {
+    changeGoodsKeyState(goodsKeyId) {
+      const ids = {
+        goodsKeyId,
+        orderId: this.orderId,
+      }
+      this.$emit('changeGoodsKeyState', ids)
     },
   },
 }

@@ -12,6 +12,7 @@
             :de-user-info="userInfo"
             btn-text="modify"
             @sendEvent="moveToModify"
+            @destroy="destroy"
             @back="back"
           />
         </v-card>
@@ -33,7 +34,7 @@ export default {
     ...mapState('login', ['userInfo']),
   },
   methods: {
-    ...mapActions('member/register', ['moveToModify', 'back']),
+    ...mapActions('member/register', ['moveToModify', 'destroy', 'back']),
   },
 }
 </script>

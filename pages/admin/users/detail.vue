@@ -9,10 +9,11 @@
           <ProgressLiner v-if="!userDetailInfo" />
           <UserRegisterForm
             v-else
-            :is-admin="isNotAdmin"
+            :is-admin="isAdmin"
             :de-user-info="userDetailInfo"
             btn-text="modify"
             @sendEvent="moveToModify"
+            @destroy="destroy"
             @back="back"
           />
         </v-card>
@@ -40,8 +41,8 @@ export default {
   },
   computed: {
     ...mapState('admin/users/detail', ['userDetailInfo']),
-    isNotAdmin() {
-      return this.userDetailInfo.access !== 'ADMINISTOR'
+    isAdmin() {
+      return this.userDetailInfo.str_access === 'Administrator'
     },
   },
   async created() {

@@ -29,6 +29,18 @@ export const actions = {
       this.$router.push({ name: 'member-mypage-orders-list' })
     })
   },
+  changeGoodsKeyState({ dispatch }, ids) {
+    const reqObj = {
+      transaction_time: new Date(),
+      data: {
+        id: ids.goodsKeyId,
+        user_id: auth.getUserId(),
+      },
+    }
+    this.$axios.put('api/goods-key', reqObj).then(() => {
+      dispatch('getOrderDetailInfoList', ids.orderId)
+    })
+  },
   back() {
     this.$router.push({ name: 'member-mypage-orders-list' })
   },

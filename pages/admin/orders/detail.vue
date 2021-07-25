@@ -21,8 +21,7 @@
               :order-detail-info="
                 JSON.parse(JSON.stringify(orderDetailInfoList))
               "
-              @changeOrderState="changeOrderState"
-              @orderCancel="orderCancel"
+              @confirmCancelOrder="confirmCancelOrder"
             />
             <v-row justify="center">
               <v-card class="pt-10" max-width="1000">
@@ -33,6 +32,7 @@
                   v-for="(orderDetailInfo,
                   index) in orderDetailInfoList.order_detail_api_response_list"
                   :key="index"
+                  :order-id="orderDetailInfoList.id"
                   :order-detail-info="orderDetailInfo"
                 />
               </v-card>
@@ -94,8 +94,7 @@ export default {
   methods: {
     ...mapActions('admin/orders/detail', [
       'getOrderDetailInfoList',
-      'changeOrderState',
-      'orderCancel',
+      'confirmCancelOrder',
       'back',
     ]),
   },

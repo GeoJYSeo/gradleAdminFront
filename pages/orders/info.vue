@@ -100,10 +100,7 @@ import CompButton from '@/components/molecules/button'
 import ConfirmDialog from '@/components/organisms/confirm_dialog'
 
 export default {
-  middleware: [
-    authMiddleware.loginAuthentication(),
-    authMiddleware.adminAuthentication(),
-  ],
+  middleware: [authMiddleware.loginAuthentication()],
   components: {
     ProgressLiner,
     OrderUserInfoDisp,

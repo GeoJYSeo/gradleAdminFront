@@ -1,4 +1,4 @@
-import auth from '@/middleware/auth'
+// import auth from '@/middleware/auth'
 
 export const actions = {
   modify({ commit }, userInfo) {
@@ -8,14 +8,14 @@ export const actions = {
     }
     this.$axios.put('api/user/', reqObj).then((res) => {
       commit('login/loginSuccess', res.data.data, { root: true })
+      commit('dialog/closeDialog', null, { root: true })
       this.$router.push({ name: 'member-detail' })
     })
   },
-  hasPasswdCheck({ commit }, newPasswd) {
-    const chgPwdInfo = { id: auth.getUserId(), passwd: newPasswd }
+  hasPasswdCheck({ commit }, WithNewPasswd) {
     const reqObj = {
       transaction_time: new Date(),
-      data: chgPwdInfo,
+      data: WithNewPasswd,
     }
     this.$axios.post('api/user/passwd-check', reqObj).then((res) => {
       if (res.data.result_code === 'OK') {

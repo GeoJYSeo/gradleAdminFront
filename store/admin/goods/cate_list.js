@@ -18,6 +18,13 @@ export const state = () => ({
       align: 'right',
       value: 'cate_code_ref',
     },
+    {
+      text: 'Delete',
+      align: 'center',
+      value: 'delCateGoods',
+      sortable: false,
+      groupable: false,
+    },
   ],
 })
 
@@ -31,6 +38,11 @@ export const actions = {
   async getCateList({ commit }) {
     await this.$axios.get('api/admin/category').then((res) => {
       commit('setCateInfo', res.data.data)
+    })
+  },
+  async destroy({ dispatch }, id) {
+    await this.$axios.delete(`api/admin/category/${id}`).then((res) => {
+      dispatch('getCateList')
     })
   },
 }

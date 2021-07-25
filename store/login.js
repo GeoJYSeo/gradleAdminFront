@@ -43,7 +43,7 @@ export const actions = {
       })
   },
   getMemberInfo({ state, commit }) {
-    if (sessionStorage.getItem('accessToken') && !state.userInfo) {
+    if (sessionStorage.getItem('accessToken')) {
       const userId = jwtDecode(auth.getAccessToken()).userId
       this.$axios
         .get(`api/user/${userId}`)

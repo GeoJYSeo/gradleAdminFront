@@ -42,32 +42,52 @@
           </div>
         </v-list-item-subtitle>
         <h3>Order Status</h3>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <div v-if="isAdmin">
+        <v-card-actions
+          v-if="
+            isAdmin &&
+            !['CANCELLED', 'Order Confirmed'].includes(
+              orderDetailInfo.order_status
+            )
+          "
+        >
+          <v-spacer />
+          <div>
             <CompButton
               class="orderSatus"
               :block="false"
-              text="Ready to order"
-              @sendEvent="changeOrderState(0)"
-            />
-            <CompButton
-              class="orderSatus"
-              :block="false"
-              text="Shipped"
-              @sendEvent="changeOrderState(1)"
+              text="Confirm Cancel"
+              @sendEvent="confirmCancelOrder"
             />
           </div>
-          <CompButton
-            v-else
-            class="orderSatus"
-            :block="false"
-            text="Cancel"
-            @sendEvent="cancelOrder"
-          />
         </v-card-actions>
+        <v-card-actions
+          v-else-if="
+            !isAdmin &&
+            !['CANCELLED', 'Cancel Pending'].includes(
+              orderDetailInfo.order_status
+            )
+          "
+        >
+          <v-spacer />
+          <div>
+            <CompButton
+              class="orderSatus"
+              :block="false"
+              text="Cancel"
+              @sendEvent="cancelOrder"
+            />
+          </div>
+        </v-card-actions>
+        <div v-else>
+          <v-list-item-subtitle class="mb-4">
+            <div class="orderItemText">
+              {{ orderDetailInfo.order_status }}
+            </div>
+          </v-list-item-subtitle>
+        </div>
       </v-list-item-content>
     </v-list-item>
+    {{ orderDetailInfo }}
   </v-card>
 </template>
 
@@ -90,13 +110,11 @@ export default {
     },
   },
   methods: {
-    changeOrderState(orderStatus) {
-      this.orderDetailInfo.order_status = orderStatus
-      this.$emit('changeOrderState', this.orderDetailInfo)
-    },
     cancelOrder() {
-      this.orderDetailInfo.order_status = 0
       this.$emit('cancelOrder', this.orderDetailInfo)
+    },
+    confirmCancelOrder() {
+      this.$emit('confirmCancelOrder', this.orderDetailInfo)
     },
   },
 }

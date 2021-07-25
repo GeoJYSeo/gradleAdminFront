@@ -7,8 +7,16 @@
         @sendEvent="sendEvent"
       />
     </v-col>
-    <v-col v-if="isDel">
-      <CompButton text="delete" @sendEvent="delData" />
+    <v-col v-if="isDetail">
+      <div v-if="userStatus === 'ACTIVATED' && !isAdmin">
+        <CompButton text="delete" @sendEvent="delData" />
+      </div>
+      <div v-else-if="userStatus === 'DELETED_PENDING' && isAdmin">
+        <CompButton text="confirm delete" @sendEvent="delData" />
+      </div>
+      <div v-else>
+        <CompButton text="deleted" disabled />
+      </div>
     </v-col>
     <v-col>
       <CompButton text="back" @sendEvent="back" />
@@ -26,7 +34,15 @@ export default {
       type: String,
       required: true,
     },
-    isDel: {
+    userStatus: {
+      type: String,
+      required: true,
+    },
+    isAdmin: {
+      type: Boolean,
+      required: true,
+    },
+    isDetail: {
       type: Boolean,
       default: () => {
         return false

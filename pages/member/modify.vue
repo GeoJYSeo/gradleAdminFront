@@ -68,6 +68,9 @@ export default {
     ...mapMutations('dialog', ['closeDialog']),
     ...mapActions('login', ['getMemberInfo']),
     ...mapActions('member/modify', ['modify', 'hasPasswdCheck', 'back']),
+    destroy() {
+      console.log(2222)
+    },
   },
 }
 </script>

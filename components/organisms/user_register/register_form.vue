@@ -109,9 +109,9 @@
         <v-col>
           <v-select
             v-model="eachBirthday.birthdayYear"
+            :items="optionBirthdayYears"
             :is-detail="isMod"
             :outlined="isMod"
-            :items="optionBirthdayYears"
             label="Birthday Year"
             @change="generateBirthday"
           ></v-select>
@@ -130,7 +130,7 @@
           <v-select
             v-model="eachBirthday.birthdayDay"
             :items="optionBirthdayDays"
-            :readonly="isMod"
+            :is-detail="isMod"
             :outlined="isMod"
             label="Birthday Day"
             @change="generateBirthday"
@@ -177,7 +177,7 @@
           />
         </v-col>
       </v-row>
-      <v-row v-if="!isNotAdmin">
+      <v-row v-if="isAdmin">
         <v-col>
           <v-card color="#263238">
             <v-card-title>Permission</v-card-title>
@@ -198,10 +198,13 @@
         </v-col>
       </v-row>
       <ButtonForm
-        :is-del="isDel"
+        :is-admin="isAdmin"
+        :user-status="userStatus"
+        :is-detail="isDetail"
         :text="btnText"
         :is-btn-disabled="isBtnDisabled"
         @sendEvent="validate"
+        @delData="destroy"
         @back="back"
       />
     </v-form>
@@ -235,11 +238,11 @@ export default {
       type: String,
       required: true,
     },
-    isNotAdmin: {
+    isAdmin: {
       type: Boolean,
       required: false,
       default: () => {
-        return true
+        return false
       },
     },
     isMod: {
@@ -315,14 +318,14 @@ export default {
     userInfo() {
       return this.deUserInfo || this.modUserInfo || this.chdUserInfo
     },
+    userStatus() {
+      return this.userInfo.status
+    },
     isBtnDisabled() {
-      return !!this.btnDisabled || !this.isNotAdmin
+      return !!this.btnDisabled
     },
     isDetail() {
       return !!this.deUserInfo
-    },
-    isDel() {
-      return this.isDetail && this.isNotAdmin
     },
   },
   async created() {
@@ -365,9 +368,13 @@ export default {
       if (this.$refs.chkPwdForm.validate()) {
         this.$emit('hasPasswdCheck', {
           id: this.userInfo.id,
+          user_email: this.userInfo.user_email,
           passwd: this.userInfo.passwd,
         })
       }
+    },
+    destroy() {
+      this.$emit('destroy', this.userInfo.id)
     },
     back() {
       this.$emit('back')

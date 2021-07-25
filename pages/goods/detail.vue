@@ -16,19 +16,20 @@
                       .goods_image_api_response_list"
                     :key="index"
                     :src="`${image.img_name}`"
-                    style="width: 1000px"
+                    style="width: 900px"
                     reverse-transition="fade-transition"
                     transition="fade-transition"
                   ></v-carousel-item>
                 </v-carousel>
               </v-col>
               <v-col>
-                <v-row>
+                <v-row justify="center">
                   <v-card color="#000000" width="360">
                     <v-row justify="center">
                       <div class="pt-6">
                         <v-img
                           :src="`${goodsDetailInfo.goods_api_response.goods_image_api_response_list[0].img_name}`"
+                          style="width: 300px"
                         />
                       </div>
                     </v-row>

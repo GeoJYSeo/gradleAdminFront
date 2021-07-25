@@ -16,7 +16,7 @@ export const actions = {
       commit('setOrderInfo', res.data.data)
     })
   },
-  changeOrderState({ commit }, orderInfo) {
+  confirmCancelOrder({ commit }, orderInfo) {
     orderInfo.user_id = auth.getUserId()
     const reqObj = {
       transaction_time: new Date(),
