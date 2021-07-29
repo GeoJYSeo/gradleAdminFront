@@ -1,8 +1,11 @@
 import auth from '@/middleware/auth'
 
 export default ({ $axios, redirect, store }) => {
-  // $axios.setBaseURL(process.env.API_BASE_URL)
-  $axios.setBaseURL('https://test-gradlemall.com/')
+  if (process.env.NODE_ENV !== 'production') {
+    $axios.setBaseURL(process.env.API_BASE_URL)
+  } else {
+    $axios.setBaseURL('https://test-gradlemall.com/')
+  }
 
   $axios.onRequest((config) => {
     const accessToken = auth.getAccessToken()
@@ -22,7 +25,6 @@ export default ({ $axios, redirect, store }) => {
 
   $axios.onError((err) => {
     const message = err.response.data.message
-    console.log(message)
     if (!message.includes('Login')) {
       redirect('/')
     }
