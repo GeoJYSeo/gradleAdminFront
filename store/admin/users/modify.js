@@ -1,10 +1,11 @@
 export const actions = {
-  modify(context, userInfo) {
+  modify({ dispatch }, userInfo) {
     const reqObj = {
       transaction_time: new Date(),
       data: userInfo,
     }
     this.$axios.put('api/admin/user', reqObj).then(() => {
+      dispatch('admin/users/list/getUserList', [0, null], { root: true })
       this.$router.push({ name: 'admin-users-list' })
     })
   },

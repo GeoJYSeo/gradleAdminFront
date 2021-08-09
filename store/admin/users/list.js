@@ -50,7 +50,7 @@ export const mutations = {
 export const actions = {
   async getUserList({ commit }, params) {
     await this.$axios
-      .get(`api/admin/user?searchKind=${params[0]}&keyword=${params[1]}`)
+      .get(`api/admin/user?searchKind=${params?.[0]}&keyword=${params?.[1]}`)
       .then((res) => {
         commit('setUserInfoList', res.data.data)
       })

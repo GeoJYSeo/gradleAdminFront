@@ -11,7 +11,8 @@
             v-else
             :mod-user-info="userInfoForMod"
             :is-mod="true"
-            :is-admin="true"
+            :is-admin="isAdmin"
+            :is-me="isMe"
             btn-text="confirm"
             @sendEvent="modify"
             @hasPasswdCheck="hasPasswdCheck"
@@ -61,11 +62,18 @@ export default {
   },
   computed: {
     ...mapState('admin/users/detail', ['userDetailInfo']),
+    ...mapState('login', ['userInfo']),
     ...mapState('dialog', [
       'dispChgPwdDialog',
       'dispConfirmDialog',
       'dialogContents',
     ]),
+    isAdmin() {
+      return this.userInfo.str_access === 'Administrator'
+    },
+    isMe() {
+      return this.userInfo.id === this.userInfoForMod.id
+    },
   },
   created() {
     this.setUserInfo()

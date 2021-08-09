@@ -35,7 +35,7 @@
           />
         </v-col>
       </v-row>
-      <v-row v-else>
+      <v-row v-else-if="isAdmin || isMe">
         <v-col>
           <v-form ref="chkPwdForm" v-model="chkPwdvalid" lazy-validation>
             <TextFieldForm
@@ -48,6 +48,16 @@
         </v-col>
         <v-col sm="3">
           <CompButton text="change Password" @sendEvent="hasPasswdCheck" />
+        </v-col>
+      </v-row>
+      <v-row v-else>
+        <v-col>
+          <TextFieldForm
+            :is-detail="isDetail || isMod"
+            :input-content.sync="userInfo.passwd"
+            :rules="isDetail ? [true] : passwordRules"
+            label="Password"
+          />
         </v-col>
       </v-row>
       <v-row>
@@ -239,6 +249,13 @@ export default {
       required: true,
     },
     isAdmin: {
+      type: Boolean,
+      required: false,
+      default: () => {
+        return false
+      },
+    },
+    isMe: {
       type: Boolean,
       required: false,
       default: () => {
