@@ -192,7 +192,7 @@
     <v-app-bar app dark>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>Gradle Mall</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon router :to="{ name: 'orders-cart_list' }">
         <v-icon>mdi-cart-outline</v-icon>

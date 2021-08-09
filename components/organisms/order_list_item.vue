@@ -87,7 +87,6 @@
         </div>
       </v-list-item-content>
     </v-list-item>
-    {{ orderDetailInfo }}
   </v-card>
 </template>
 

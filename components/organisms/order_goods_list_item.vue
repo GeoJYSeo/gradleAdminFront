@@ -79,7 +79,6 @@
         </v-row>
       </v-list-item-content>
     </v-list-item>
-    {{ orderDetailInfo.goods_key_api_response_list }}
   </v-card>
 </template>
 

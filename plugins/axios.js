@@ -25,8 +25,8 @@ export default ({ $axios, redirect, store }) => {
 
   $axios.onError((err) => {
     const message = err.response.data.message
-    if (!message.includes('Login')) {
-      redirect('/')
+    if (message.includes('Login')) {
+      redirect('/error')
     }
   })
 }

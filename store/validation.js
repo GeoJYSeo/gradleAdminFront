@@ -53,9 +53,8 @@ export const state = () => ({
     (v) => /^[a-zA-Z0-9]{1,24}$/.test(v) || 'Goods Name is invalid',
   ],
   priceRules: [
-    (v) => !!v || 'Please enter the GOODS NAME',
-    (v) =>
-      /^[-]?\d{1,999999}(?:[.]\d{1,4})?$/.test(v) || 'Goods price is invalid',
+    (v) => !!v || 'Please enter the GOODS Price',
+    (v) => /^\d{1,999999}(?:[.]\d{1,4})?$/.test(v) || 'Goods price is invalid',
   ],
   stockRules: [
     (v) => !!v || 'Please enter the GOODS STOCK',

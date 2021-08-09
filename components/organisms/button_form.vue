@@ -8,11 +8,19 @@
       />
     </v-col>
     <v-col v-if="isDetail">
-      <div v-if="userStatus === 'ACTIVATED' && !isAdmin">
-        <CompButton text="delete" @sendEvent="delData" />
+      <div v-if="userStatus === 'ACTIVATED'">
+        <CompButton
+          text="delete"
+          :disabled="disableButton"
+          @sendEvent="delData"
+        />
       </div>
-      <div v-else-if="userStatus === 'DELETED_PENDING' && isAdmin">
-        <CompButton text="confirm delete" @sendEvent="delData" />
+      <div v-else-if="userStatus === 'DELETED_PENDING'">
+        <CompButton
+          text="confirm delete"
+          :disabled="disableButton"
+          @sendEvent="delData"
+        />
       </div>
       <div v-else>
         <CompButton text="deleted" disabled />
@@ -36,11 +44,17 @@ export default {
     },
     userStatus: {
       type: String,
-      required: true,
+      required: false,
+      default: () => {
+        return null
+      },
     },
     isAdmin: {
       type: Boolean,
-      required: true,
+      required: false,
+      default: () => {
+        return false
+      },
     },
     isDetail: {
       type: Boolean,
@@ -53,6 +67,11 @@ export default {
       default: () => {
         return false
       },
+    },
+  },
+  computed: {
+    disableButton() {
+      return !this.isAdmin
     },
   },
   methods: {

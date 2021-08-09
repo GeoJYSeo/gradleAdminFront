@@ -41,8 +41,9 @@ export default {
   },
   computed: {
     ...mapState('admin/users/detail', ['userDetailInfo']),
+    ...mapState('login', ['userInfo']),
     isAdmin() {
-      return this.userDetailInfo.str_access === 'Administrator'
+      return this.userInfo.str_access === 'Administrator'
     },
   },
   async created() {

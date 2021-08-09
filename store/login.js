@@ -63,6 +63,6 @@ export const actions = {
     this.$router.push({ name: 'index' })
     commit('logout')
     sessionStorage.removeItem('accessToken')
-    sessionStorage.removeItem('gdsId')
+    sessionStorage.removeItem('selUserId')
   },
 }
