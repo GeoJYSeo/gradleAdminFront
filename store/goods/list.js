@@ -16,13 +16,15 @@ export const actions = {
   async getGoodsList({ commit }, params) {
     await this.$axios
       .get(
-        `api/goods?page=${--params[0]}&keyword=${params[1] ? params[1] : ''}`
+        `api/goods?page=${--params[0]}&keyword=${
+          params[1] ? params[1] : ''
+        }&categoryName=${params?.[2] ? params[2] : ''}`
       )
       .then((res) => {
         commit('setGoodsInfo', res.data)
       })
   },
   back() {
-    this.$router.push({ name: 'admin' })
+    this.$router.push({ name: 'index' })
   },
 }

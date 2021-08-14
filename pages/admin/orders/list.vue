@@ -4,7 +4,15 @@
       <v-flex xs12>
         <v-card>
           <v-toolbar flat dark>
-            <v-toolbar-title>Order List</v-toolbar-title>
+            <v-row>
+              <v-col>
+                <v-toolbar-title>Order List</v-toolbar-title>
+              </v-col>
+              <v-spacer></v-spacer>
+              <v-col cols="12" sm="1">
+                <IconButton text="mdi-transfer-left" @sendEvent="back" />
+              </v-col>
+            </v-row>
           </v-toolbar>
           <ProgressLiner v-if="!orderInfoList" />
           <div v-else class="pa-4">

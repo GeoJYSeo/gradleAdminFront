@@ -135,7 +135,12 @@ export default {
     },
   },
   async created() {
-    await this.getGoodsList([this.curPageNum, this.keyword])
+    console.log(11111)
+    await this.getGoodsList([
+      this.curPageNum,
+      this.keyword,
+      this.$route.params.categoryName,
+    ])
   },
   methods: {
     ...mapMutations('dialog', ['closeDialog']),
