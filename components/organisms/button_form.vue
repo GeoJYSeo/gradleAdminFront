@@ -11,7 +11,7 @@
       <div v-if="userStatus === 'ACTIVATED'">
         <CompButton
           text="delete"
-          :disabled="disableButton"
+          :disabled="isMe ? false : disableButton"
           @sendEvent="delData"
         />
       </div>
@@ -50,6 +50,13 @@ export default {
       },
     },
     isAdmin: {
+      type: Boolean,
+      required: false,
+      default: () => {
+        return false
+      },
+    },
+    isMe: {
       type: Boolean,
       required: false,
       default: () => {

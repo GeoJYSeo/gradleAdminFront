@@ -10,6 +10,7 @@
           <UserRegisterForm
             v-else
             :de-user-info="userInfo"
+            :is-me="true"
             btn-text="modify"
             @sendEvent="moveToModify"
             @destroy="destroy"

@@ -209,6 +209,7 @@
       </v-row>
       <ButtonForm
         :is-admin="isAdmin"
+        :is-me="isMe"
         :user-status="userStatus"
         :is-detail="isDetail"
         :text="btnText"
