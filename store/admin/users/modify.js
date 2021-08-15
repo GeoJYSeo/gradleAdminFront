@@ -1,11 +1,12 @@
 export const actions = {
-  modify({ dispatch }, userInfo) {
+  modify({ dispatch, commit }, userInfo) {
     const reqObj = {
       transaction_time: new Date(),
       data: userInfo,
     }
     this.$axios.put('api/admin/user', reqObj).then(() => {
       dispatch('admin/users/list/getUserList', [0, null], { root: true })
+      commit('dialog/closeDialog', null, { root: true })
       this.$router.push({ name: 'admin-users-list' })
     })
   },
@@ -25,7 +26,7 @@ export const actions = {
         }
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err.message)
         this.$router.push({ name: 'error' })
       })
   },

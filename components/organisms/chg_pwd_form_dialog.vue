@@ -8,7 +8,15 @@
         <v-form ref="form" v-model="valid" class="px-15" lazy-validation>
           <v-row>
             <TextFieldForm
-              :input-content.sync="userInfo.passwd"
+              :input-content.sync="oldPasswd"
+              :rules="passwordRules"
+              input-type="password"
+              label="Old Password"
+            />
+          </v-row>
+          <v-row>
+            <TextFieldForm
+              :input-content.sync="newPasswd"
               :rules="passwordRules"
               input-type="password"
               label="New Password"
@@ -60,15 +68,12 @@ export default {
   data() {
     return {
       valid: true,
-      userInfo: {
-        id: this.userId,
-        passwd: null,
-      },
+      oldPasswd: null,
+      newPasswd: null,
       passwdCheck: null,
       passwordCheckRules: [
         (v) => !!v || 'Please enter the PASSWORD',
-        (v) =>
-          this.userInfo.passwd === this.passwdCheck || 'password is different',
+        (v) => this.newPasswd === this.passwdCheck || 'password is different',
         // (v) => /^[a-zA-Z0-9]{8,16}$/.test(v),
       ],
     }
@@ -79,7 +84,7 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-        this.$emit('modify', this.userInfo)
+        this.$emit('changePassword', this.oldPasswd, this.newPasswd)
       }
     },
     closeDialog() {

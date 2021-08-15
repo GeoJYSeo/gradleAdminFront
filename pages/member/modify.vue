@@ -11,6 +11,7 @@
             v-else
             :mod-user-info="userInfoForMod"
             :is-mod="true"
+            :is-me="true"
             btn-text="confirm"
             @sendEvent="modify"
             @hasPasswdCheck="hasPasswdCheck"
@@ -21,7 +22,7 @@
           :disp-chg-pwd-dialog="dispChgPwdDialog"
           :dialog-contents="dialogContents[6]"
           :user-id="userInfoForMod.id"
-          @modify="modify"
+          @changePassword="changePassword"
           @closeDialog="closeDialog"
         />
         <ConfirmDialog
@@ -48,6 +49,11 @@ export default {
     ChgPwdFormDialog,
     ConfirmDialog,
   },
+  data() {
+    return {
+      userInfoForMod: null,
+    }
+  },
   computed: {
     ...mapState('login', ['userInfo']),
     ...mapState('dialog', [
@@ -55,21 +61,28 @@ export default {
       'dispConfirmDialog',
       'dialogContents',
     ]),
-    userInfoForMod() {
-      if (this.$route.params.userInfo) {
-        return JSON.parse(JSON.stringify(this.$route.params.userInfo))
-      } else {
-        this.getMemberInfo()
-        return JSON.parse(JSON.stringify(this.userInfo))
-      }
-    },
+  },
+  created() {
+    this.setUserInfo()
   },
   methods: {
     ...mapMutations('dialog', ['closeDialog']),
     ...mapActions('login', ['getMemberInfo']),
     ...mapActions('member/modify', ['modify', 'hasPasswdCheck', 'back']),
-    destroy() {
-      console.log(2222)
+    async setUserInfo() {
+      if (this.$route.params.userInfo) {
+        this.userInfoForMod = JSON.parse(
+          JSON.stringify(this.$route.params.userInfo)
+        )
+      } else {
+        await this.getMemberInfo()
+        this.userInfoForMod = JSON.parse(JSON.stringify(this.userInfo))
+      }
+    },
+    changePassword(oldPasswd, newPasswd) {
+      this.userInfoForMod.passwd = oldPasswd
+      this.userInfoForMod.new_passwd = newPasswd
+      this.modify(this.userInfoForMod)
     },
   },
 }

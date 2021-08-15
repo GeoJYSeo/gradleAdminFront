@@ -23,7 +23,7 @@
           :disp-chg-pwd-dialog="dispChgPwdDialog"
           :dialog-contents="dialogContents[6]"
           :user-id="userInfoForMod.id"
-          @modify="modify"
+          @changePassword="changePassword"
           @closeDialog="closeDialog"
         />
         <ConfirmDialog
@@ -91,6 +91,11 @@ export default {
         await this.getUserDetailInfo(sessionStorage.getItem('selUserId'))
         this.userInfoForMod = JSON.parse(JSON.stringify(this.userDetailInfo))
       }
+    },
+    changePassword(oldPasswd, newPasswd) {
+      this.userInfoForMod.passwd = oldPasswd
+      this.userInfoForMod.new_passwd = newPasswd
+      this.modify(this.userInfoForMod)
     },
   },
 }

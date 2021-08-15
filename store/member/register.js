@@ -7,10 +7,7 @@ export const mutations = {
   setHasEmail(state, hasEmail) {
     const result =
       hasEmail.result_code === 'OK'
-        ? [
-            false,
-            { btn_color: '#1E88E5', text: 'This user email is available' },
-          ]
+        ? [false, { btn_color: '#1E88E5', text: 'This email is available' }]
         : [true, { btn_color: '#D32F2F', text: hasEmail.description }]
     state.hasEmailResult = result[0]
     state.EmailCheckMessage = result[1]
@@ -48,7 +45,8 @@ export const actions = {
       dispatch('login/getMemberInfo', null, { root: true })
     })
   },
-  back() {
+  back({ commit }) {
+    commit('registeredUser')
     this.$router.push({ name: 'index' })
   },
 }
