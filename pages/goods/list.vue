@@ -135,7 +135,6 @@ export default {
     },
   },
   async created() {
-    console.log(11111)
     await this.getGoodsList([
       this.curPageNum,
       this.keyword,
