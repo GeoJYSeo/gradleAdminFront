@@ -4,7 +4,7 @@
       <v-flex xs12>
         <v-card>
           <v-toolbar flat dark>
-            <v-toolbar-title>My Informtion</v-toolbar-title>
+            <v-toolbar-title>My Information</v-toolbar-title>
           </v-toolbar>
           <ProgressLiner v-if="!userInfo" />
           <UserRegisterForm

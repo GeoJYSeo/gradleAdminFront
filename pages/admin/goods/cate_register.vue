@@ -52,8 +52,9 @@ export default {
     async setCateList() {
       if (!this.cateInfo) await this.getCateList()
       this.allCateCodes = this.cateInfo
-        .filter((cate) => cate.cate_code !== '0')
-        .map((cate) => cate.cate_code)
+        .filter((cate) => cate.cate_code_ref !== 'N/A')
+        .map((cate) => cate.cate_code_ref)
+        .sort()
     },
   },
 }
