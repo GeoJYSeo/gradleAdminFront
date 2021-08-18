@@ -57,7 +57,9 @@
                       </v-card>
                     </v-row>
                     <v-row :justify="justify">
-                      ({{ goodsInfo.cate_code }})
+                      [{{ goodsInfo.category_api_response.cate_name }}-{{
+                        goodsInfo.cate_code
+                      }}]
                       {{ goodsInfo.gds_name }}
                     </v-row>
                   </v-col>

@@ -61,7 +61,8 @@
                         </div>
                         <v-card color="#263238">
                           <v-card-title
-                            >({{ goodsInfo.cate_code }})
+                            >[{{ goodsInfo.category_api_response.cate_name }}-
+                            {{ goodsInfo.cate_code }}]
                             {{ goodsInfo.gds_name }}</v-card-title
                           >
                           <v-card-actions class="justify-right">

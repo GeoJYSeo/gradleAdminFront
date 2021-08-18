@@ -49,16 +49,16 @@ export const state = () => ({
   ],
   gdsNameRules: [
     (v) => !!v || 'Please enter the GOODS NAME',
-    (v) => /^[a-zA-Z0-9]{1,24}$/.test(v) || 'Invalid Goods Name',
+    (v) => /^[a-zA-Z0-9\s]{1,24}$/.test(v) || 'Invalid Goods Name',
   ],
   priceRules: [
     (v) => !!v || 'Please enter the GOODS Price',
-    (v) => /^\d{1,999999}(?:[.]\d{1,4})?$/.test(v) || 'Invalid Goods price',
+    (v) => /^\d{1,20}(?:[.]\d{1,4})?$/.test(v) || 'Invalid Goods price',
     (v) => !String(v).startsWith('0') || 'Invalid price format',
   ],
   stockRules: [
     (v) => !!v || 'Please enter the GOODS STOCK',
-    (v) => /^[0-9]{1,999999}$/.test(v) || 'Invalid Goods stock',
+    (v) => /^[0-9]{1,9}$/.test(v) || 'Invalid Goods stock',
     (v) => !String(v).startsWith('0') || 'Invalid stock format',
   ],
   orderPostCodeRules: [

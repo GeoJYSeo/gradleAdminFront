@@ -53,7 +53,9 @@ export default {
       if (!this.cateInfo) await this.getCateList()
       this.allCateCodes = this.cateInfo
         .filter((cate) => cate.cate_code_ref !== 'N/A')
-        .map((cate) => cate.cate_code_ref)
+        // .map((cate) => `${cate.cate_name}<${cate.cate_code_ref}>`)
+        .filter((cate) => cate.cate_code_ref === cate.cate_code)
+        .map((cate) => `<${cate.cate_code_ref}> ${cate.cate_name}`)
         .sort()
     },
   },

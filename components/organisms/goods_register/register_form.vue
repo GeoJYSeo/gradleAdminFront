@@ -5,6 +5,14 @@
         <v-col>
           <FormTextField
             :is-detail="isDetail"
+            :input-content.sync="category.cate_name"
+            :rules="[true]"
+            label="Category Name"
+          />
+        </v-col>
+        <v-col>
+          <FormTextField
+            :is-detail="isDetail"
             :input-content.sync="category.cate_code_ref"
             :rules="[true]"
             label="Category Main Code"
@@ -236,15 +244,23 @@ export default {
     ...mapActions('admin/goods/cate_list', ['getCateList']),
     async setSelCateCodeRef() {
       await this.getCateList()
-      this.allCateCodeRefs = this.cateInfo.map((code) => code.cate_code_ref)
+      console.log(this.goodsInfo)
+      this.allCateCodeRefs = this.cateInfo
+        .filter((code) => code.cate_code_ref === code.cate_code)
+        .map((code) => `<${code.cate_code_ref}> ${code.cate_name}`)
       this.cate_code_ref = !Object.values(this.goodsInfo).includes(null)
-        ? this.goodsInfo.category_api_response.cate_code_ref
+        ? `<${this.goodsInfo.category_api_response.cate_code_ref}> ${this.goodsInfo.category_api_response.cate_name}`
         : null
+      console.log(this.cate_code_ref)
       this.selAllCateCodes.push(this.goodsInfo.cate_code || '')
     },
     changeAllCateCodeRefs() {
+      const cateCode = this.cate_code_ref
+        .split(' ')[0]
+        .replace('<', '')
+        .replace('>', '')
       this.selAllCateCodes = this.cateInfo
-        .filter((code) => this.cate_code_ref === code.cate_code_ref)
+        .filter((code) => cateCode === code.cate_code_ref)
         .map((ref) => ref.cate_code)
     },
     setDelImageIds(index) {
