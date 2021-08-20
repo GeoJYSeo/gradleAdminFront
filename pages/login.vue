@@ -42,7 +42,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
+
 export default {
   data() {
     return {
@@ -56,7 +57,11 @@ export default {
     ...mapState('login', ['isLoginError']),
     ...mapState('validation', ['passwordRules', 'emailRules']),
   },
+  created() {
+    this.setErrorInit()
+  },
   methods: {
+    ...mapMutations('login', ['setErrorInit']),
     ...mapActions('login', ['login']),
   },
 }

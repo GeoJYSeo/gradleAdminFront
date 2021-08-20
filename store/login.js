@@ -18,6 +18,9 @@ export const mutations = {
     state.isLogin = false
     state.isLoginError = true
   },
+  setErrorInit(state) {
+    state.isLoginError = false
+  },
   logout(state) {
     state.isLogin = false
     state.isLoginError = false

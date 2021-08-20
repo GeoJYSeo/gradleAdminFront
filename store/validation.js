@@ -25,11 +25,11 @@ export const state = () => ({
     (v) => !!v || 'Please enter the PHONE NUMBER',
     (v) => /^[0-9]{11}$/.test(v) || 'Invalid Phone Number',
   ],
-  postCodeRules: [(v) => /^[0-9]{7}|null$/.test(v) || 'Invalid Post code'],
-  stateRules: [(v) => /^[a-zA-Z]{1,100}$/.test(v) || 'Invalid State'],
-  cityRules: [(v) => /^[a-zA-Z]{1,100}$/.test(v) || 'Invalid City/Town'],
+  postCodeRules: [(v) => /^[0-9]{0,7}|null$/.test(v) || 'Invalid Post code'],
+  stateRules: [(v) => /^[a-zA-Z]{0,100}$/.test(v) || 'Invalid State'],
+  cityRules: [(v) => /^[a-zA-Z]{0,100}$/.test(v) || 'Invalid City/Town'],
   otherAddrRules: [
-    (v) => /^[a-zA-Z0-9\s]{1,100}$/.test(v) || 'Invalid Address',
+    (v) => /^[a-zA-Z0-9\s]{0,100}$/.test(v) || 'Invalid Address',
   ],
   cateNameRules: [
     (v) => !!v || 'Please enter the CATEGORY NAME',
