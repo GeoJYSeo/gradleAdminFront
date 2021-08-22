@@ -87,28 +87,34 @@
           />
         </v-col>
       </v-row>
-      <div v-if="isDetail || fileInputDisp">
-        <v-row v-for="(image, index) in imagesInfo" :key="index" align="center">
-          <v-col>
-            <FormTextField
-              :is-detail="true"
-              :input-content.sync="image.ori_name"
-              :rules="[true]"
-              label="Image"
-            />
-          </v-col>
-          <v-col v-if="fileInputDisp" cols="12" sm="3">
-            <v-btn
-              block
-              large
-              depressed
-              color="#424242"
-              class="white--text"
-              @click="setDelImageIds(index)"
-              >delete</v-btn
-            >
-          </v-col>
-        </v-row>
+      <div v-if="imagesInfo[0].id">
+        <div v-if="isDetail || fileInputDisp">
+          <v-row
+            v-for="(image, index) in imagesInfo"
+            :key="index"
+            align="center"
+          >
+            <v-col>
+              <FormTextField
+                :is-detail="true"
+                :input-content.sync="image.ori_name"
+                :rules="[true]"
+                label="Image"
+              />
+            </v-col>
+            <v-col v-if="fileInputDisp" cols="12" sm="3">
+              <v-btn
+                block
+                large
+                depressed
+                color="#424242"
+                class="white--text"
+                @click="setDelImageIds(index)"
+                >delete</v-btn
+              >
+            </v-col>
+          </v-row>
+        </div>
       </div>
       <v-row v-if="fileInputDisp">
         <v-col>
@@ -139,8 +145,8 @@
         </v-col>
       </v-row>
       <FormButton
-        :is-del="isDel"
         :text="btnText"
+        :is-goods-del="isGoodsDel"
         @sendEvent="validate"
         @delData="delData"
         @back="back"
@@ -190,6 +196,13 @@ export default {
         return false
       },
     },
+    isGoodsDel: {
+      type: Boolean,
+      required: false,
+      default: () => {
+        return false
+      },
+    },
     fileInputDisp: {
       type: Boolean,
       required: false,
@@ -230,9 +243,6 @@ export default {
     isDetail() {
       return !!this.deGoodsInfo
     },
-    isDel() {
-      return this.isDetail && this.isAdmin
-    },
     category() {
       return this.goodsInfo ? this.goodsInfo.category_api_response : []
     },
@@ -244,14 +254,12 @@ export default {
     ...mapActions('admin/goods/cate_list', ['getCateList']),
     async setSelCateCodeRef() {
       await this.getCateList()
-      console.log(this.goodsInfo)
       this.allCateCodeRefs = this.cateInfo
         .filter((code) => code.cate_code_ref === code.cate_code)
         .map((code) => `<${code.cate_code_ref}> ${code.cate_name}`)
       this.cate_code_ref = !Object.values(this.goodsInfo).includes(null)
         ? `<${this.goodsInfo.category_api_response.cate_code_ref}> ${this.goodsInfo.category_api_response.cate_name}`
         : null
-      console.log(this.cate_code_ref)
       this.selAllCateCodes.push(this.goodsInfo.cate_code || '')
     },
     changeAllCateCodeRefs() {

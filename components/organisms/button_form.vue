@@ -7,11 +7,11 @@
         @sendEvent="sendEvent"
       />
     </v-col>
-    <v-col v-if="isDetail">
-      <div v-if="userStatus === 'ACTIVATED'">
+    <v-col v-if="isDetail || isGoodsDel">
+      <div v-if="userStatus === 'ACTIVATED' || isGoodsDel">
         <CompButton
           text="delete"
-          :disabled="isMe ? false : disableButton"
+          :disabled="isGoodsDel ? false : isMe ? false : disableButton"
           @sendEvent="delData"
         />
       </div>
@@ -64,6 +64,12 @@ export default {
       },
     },
     isDetail: {
+      type: Boolean,
+      default: () => {
+        return false
+      },
+    },
+    isGoodsDel: {
       type: Boolean,
       default: () => {
         return false
