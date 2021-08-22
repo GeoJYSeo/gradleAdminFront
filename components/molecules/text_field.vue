@@ -8,6 +8,7 @@
     :type="inputType"
     :clearable="!isDetail"
     :label="label"
+    :prepend-inner-icon="prependInnerIcon"
     @input="sendInput"
   ></v-text-field>
 </template>
@@ -15,6 +16,12 @@
 <script>
 export default {
   props: {
+    required: {
+      type: Boolean,
+      default: () => {
+        return false
+      },
+    },
     inputContent: {
       type: String,
       default: () => {
@@ -46,6 +53,11 @@ export default {
       default: () => {
         return false
       },
+    },
+  },
+  computed: {
+    prependInnerIcon() {
+      return this.required ? 'mdi-star-circle' : null
     },
   },
   methods: {

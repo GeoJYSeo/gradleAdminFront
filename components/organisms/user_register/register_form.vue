@@ -4,6 +4,7 @@
       <v-row align="center">
         <v-col>
           <TextFieldForm
+            :required="!isDetail"
             :is-detail="isDetail || isMod"
             :input-content.sync="userInfo.user_email"
             :rules="isDetail ? [true] : emailRules"
@@ -19,6 +20,7 @@
       <v-row v-if="!isMod">
         <v-col>
           <TextFieldForm
+            :required="!isDetail"
             :is-detail="isDetail"
             :input-content.sync="userInfo.passwd"
             :rules="isDetail || modUserInfo ? [true] : passwordRules"
@@ -63,6 +65,7 @@
       <v-row>
         <v-col>
           <TextFieldForm
+            :required="!isDetail"
             :is-detail="isDetail"
             :input-content.sync="userInfo.user_name"
             :rules="isDetail ? [true] : lastNameRules"
@@ -71,6 +74,7 @@
         </v-col>
         <v-col>
           <TextFieldForm
+            :required="!isDetail"
             :is-detail="isDetail"
             :input-content.sync="userInfo.user_surname"
             :rules="isDetail ? [true] : surNameRules"
@@ -81,6 +85,7 @@
       <v-row>
         <v-col>
           <TextFieldForm
+            :required="!isDetail"
             :is-detail="isDetail"
             :input-content.sync="userInfo.phone_num"
             :rules="isDetail ? [true] : phoneNumberRules"
