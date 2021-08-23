@@ -60,19 +60,25 @@
         </div>
       </div>
       <div v-else class="pa-4">
-        <v-row align="center">
-          <v-col>
-            <FormTextarea
-              :is-detail="isDetail"
-              :input-content.sync="commentInfo.comment"
-              :rules="isDetail ? [true] : commentRules"
-              label="Comment"
-            />
-          </v-col>
-          <v-col cols="12" sm="2">
-            <CompButton text="confirm" color="#43A047" @sendEvent="sendEvent" />
-          </v-col>
-        </v-row>
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-row align="center">
+            <v-col>
+              <FormTextarea
+                :is-detail="isDetail"
+                :input-content.sync="commentInfo.comment"
+                :rules="isDetail ? [true] : commentRules"
+                label="Comment"
+              />
+            </v-col>
+            <v-col cols="12" sm="2">
+              <CompButton
+                text="confirm"
+                color="#43A047"
+                @sendEvent="sendEvent"
+              />
+            </v-col>
+          </v-row>
+        </v-form>
       </div>
     </v-card>
   </v-flex>
@@ -118,6 +124,7 @@ export default {
   },
   data() {
     return {
+      valid: true,
       commentInfo: {
         comment: null,
         goods_id: null,
@@ -129,9 +136,11 @@ export default {
   },
   methods: {
     sendEvent() {
-      this.commentInfo.goods_id = this.goodsId
-      this.$emit('sendEvent', this.commentInfo)
-      this.commentInfo = { comment: null, goods_id: null }
+      if (this.$refs.form.validate()) {
+        this.commentInfo.goods_id = this.goodsId
+        this.$emit('sendEvent', this.commentInfo)
+        this.commentInfo = { comment: null, goods_id: null }
+      }
     },
     modDialog(commentInfo) {
       this.$emit('modDialog', commentInfo)

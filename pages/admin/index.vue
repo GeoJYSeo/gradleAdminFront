@@ -87,7 +87,7 @@
                   <v-col>
                     <v-card-text>Goods List</v-card-text>
                   </v-col>
-                  <router-link :to="{ name: 'admin-orders-list' }">
+                  <router-link :to="{ name: 'admin-goods-register' }">
                     <v-col>
                       <v-card-text>
                         <img class="registration" :src="registration" />

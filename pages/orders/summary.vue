@@ -32,10 +32,17 @@
                     </v-row>
                   </v-list-item-subtitle>
                   <v-card-actions class="pt-5 justify-end">
-                    <CompButton
-                      text="confirm"
-                      @sendEvent="register(orderInfo)"
-                    />
+                    <v-row>
+                      <v-col>
+                        <CompButton
+                          text="confirm"
+                          @sendEvent="register(orderInfo)"
+                        />
+                      </v-col>
+                      <v-col>
+                        <CompButton text="cancel" @sendEvent="cancel" />
+                      </v-col>
+                    </v-row>
                   </v-card-actions>
                 </v-list-item-content>
               </v-list-item>
@@ -91,6 +98,11 @@ export default {
         await this.moveToMyOrderList()
       } else if (this.result === 'error') {
         this.closeDialog()
+      }
+    },
+    cancel() {
+      if (confirm('Are you sure you want to go back to the HOME page')) {
+        this.$router.push({ name: 'index' })
       }
     },
   },

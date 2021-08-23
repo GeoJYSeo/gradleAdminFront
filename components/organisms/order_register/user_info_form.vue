@@ -10,6 +10,7 @@
             <v-text-field
               v-model="orderUserInfo.user_name"
               :rules="lastNameRules"
+              :prepend-inner-icon="prependInnerIcon"
               type="text"
               label="Last Name"
               clearable
@@ -18,6 +19,7 @@
           <v-col>
             <v-text-field
               v-model="orderUserInfo.user_surname"
+              :prepend-inner-icon="prependInnerIcon"
               :rules="surNameRules"
               type="text"
               label="Surname"
@@ -29,6 +31,7 @@
           <v-col>
             <v-text-field
               v-model="orderUserInfo.phone_num"
+              :prepend-inner-icon="prependInnerIcon"
               :rules="phoneNumberRules"
               label="Phone Number"
               placeholder="Please enter without hyphen(-)"
@@ -40,6 +43,7 @@
           <v-col>
             <v-text-field
               v-model="orderUserInfo.post_code"
+              :prepend-inner-icon="prependInnerIcon"
               :rules="orderPostCodeRules"
               label="Post Code"
               placeholder="Please enter without hyphen(-)"
@@ -49,6 +53,7 @@
           <v-col>
             <v-text-field
               v-model="orderUserInfo.user_addr1"
+              :prepend-inner-icon="prependInnerIcon"
               :rules="orderStateRules"
               label="State"
               clearable
@@ -57,6 +62,7 @@
           <v-col>
             <v-text-field
               v-model="orderUserInfo.user_addr2"
+              :prepend-inner-icon="prependInnerIcon"
               :rules="orderCityRules"
               label="City/Town"
               clearable
@@ -67,6 +73,7 @@
           <v-col>
             <v-text-field
               v-model="orderUserInfo.user_addr3"
+              :prepend-inner-icon="prependInnerIcon"
               :rules="orderOtherAddrRules"
               label="Road/Building"
               clearable
@@ -127,6 +134,7 @@ export default {
   data() {
     return {
       valid: true,
+      prependInnerIcon: 'mdi-star-circle',
       chOrderUserInfo: {
         user_id: null,
         user_name: null,

@@ -161,16 +161,16 @@ export default {
       } else {
         await this.getCartList()
         this.cartInfo = JSON.parse(JSON.stringify(this.cartInfoList))
+        if (!this.cartInfo[0]) {
+          this.moveToGoodsList()
+        } else {
+          this.cartInfo.forEach((cart) => {
+            if (cart.goods_api_response.gds_stock === '0') {
+              cart.cart_price = 0
+            }
+          })
+        }
         this.orderUserInfo = this.cartInfo[0].user_api_response
-      }
-      if (!this.cartInfo) {
-        this.moveToGoodsList()
-      } else {
-        this.cartInfo.forEach((cart) => {
-          if (cart.goods_api_response.gds_stock === '0') {
-            cart.cart_price = 0
-          }
-        })
       }
     },
     hasUserAddress() {

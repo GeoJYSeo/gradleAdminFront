@@ -31,6 +31,7 @@
         <v-col>
           <v-select
             v-model="cate_code_ref"
+            prepend-icon="mdi-star-circle"
             :items="allCateCodeRefs"
             :rules="selCateCodeRefRules"
             label="Category Main Code"
@@ -41,6 +42,7 @@
         <v-col>
           <v-select
             v-model="goodsInfo.cate_code"
+            prepend-icon="mdi-star-circle"
             :items="selAllCateCodes"
             :rules="selCateCodeRules"
             label="Category Sub Code"
@@ -51,6 +53,7 @@
       <v-row>
         <v-col>
           <FormTextField
+            :required="!isDetail"
             :is-detail="isDetail"
             :input-content.sync="goodsInfo.gds_name"
             :rules="isDetail ? [true] : gdsNameRules"
@@ -61,6 +64,7 @@
       <v-row>
         <v-col>
           <FormTextField
+            :required="!isDetail"
             :is-detail="isDetail"
             :input-content.sync="goodsInfo.gds_price"
             :rules="isDetail ? [true] : priceRules"
@@ -71,6 +75,7 @@
       <v-row>
         <v-col>
           <FormTextField
+            :required="!isDetail"
             :is-detail="isDetail"
             :input-content.sync="goodsInfo.gds_stock"
             :rules="isDetail ? [true] : stockRules"
@@ -81,13 +86,14 @@
       <v-row>
         <v-col>
           <FormTextarea
+            :required="!isDetail"
             :is-detail="isDetail"
             :input-content.sync="goodsInfo.gds_desc"
             label="Goods Description"
           />
         </v-col>
       </v-row>
-      <div v-if="imagesInfo[0].id">
+      <div v-if="imagesInfo ? imagesInfo[0].id : false">
         <div v-if="isDetail || fileInputDisp">
           <v-row
             v-for="(image, index) in imagesInfo"

@@ -4,9 +4,11 @@
     :outlined="isDetail"
     :readonly="isDetail"
     :hide-details="isDetail"
+    :rules="rules"
     :clearable="!isDetail"
     :label="label"
     :placeholder="placeholder"
+    :prepend-icon="prependIcon"
     auto-grow
     @input="sendInput"
   ></v-textarea>
@@ -15,12 +17,22 @@
 <script>
 export default {
   props: {
+    required: {
+      type: Boolean,
+      default: () => {
+        return false
+      },
+    },
     inputContent: {
       type: String,
       required: false,
       default: () => {
         return null
       },
+    },
+    rules: {
+      type: Array,
+      required: true,
     },
     label: {
       type: String,
@@ -42,6 +54,11 @@ export default {
       default: () => {
         return false
       },
+    },
+  },
+  computed: {
+    prependIcon() {
+      return this.required ? 'mdi-star-circle' : null
     },
   },
   methods: {
