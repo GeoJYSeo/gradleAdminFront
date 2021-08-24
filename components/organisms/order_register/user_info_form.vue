@@ -43,7 +43,6 @@
           <v-col>
             <v-text-field
               v-model="orderUserInfo.post_code"
-              :prepend-inner-icon="prependInnerIcon"
               :rules="orderPostCodeRules"
               label="Post Code"
               placeholder="Please enter without hyphen(-)"
@@ -53,7 +52,6 @@
           <v-col>
             <v-text-field
               v-model="orderUserInfo.user_addr1"
-              :prepend-inner-icon="prependInnerIcon"
               :rules="orderStateRules"
               label="State"
               clearable
@@ -62,7 +60,6 @@
           <v-col>
             <v-text-field
               v-model="orderUserInfo.user_addr2"
-              :prepend-inner-icon="prependInnerIcon"
               :rules="orderCityRules"
               label="City/Town"
               clearable
@@ -73,7 +70,6 @@
           <v-col>
             <v-text-field
               v-model="orderUserInfo.user_addr3"
-              :prepend-inner-icon="prependInnerIcon"
               :rules="orderOtherAddrRules"
               label="Road/Building"
               clearable
