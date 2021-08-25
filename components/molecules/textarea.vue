@@ -32,7 +32,10 @@ export default {
     },
     rules: {
       type: Array,
-      required: true,
+      required: false,
+      default: () => {
+        return [true]
+      },
     },
     label: {
       type: String,

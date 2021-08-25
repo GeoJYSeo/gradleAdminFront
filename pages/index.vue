@@ -49,7 +49,7 @@
                     <v-expand-transition>
                       <div
                         v-if="hover"
-                        class="d-flex transition-fast-in-fast-out blue darken-2 v-card--reveal text-h3 bold white--text"
+                        class="d-flex transition-fast-in-fast-out blue darken-2 v-card--reveal text-h4 bold white--text"
                         style="height: 100%"
                       >
                         {{ category.title }}
@@ -73,13 +73,13 @@ import winter from '@/assets/special_offers/winter.jpg'
 import black from '@/assets/special_offers/black.jpg'
 import holloween from '@/assets/special_offers/holloween.jpg'
 import action from '@/assets/categories/action.jpg'
-import arcade from '@/assets/categories/arcade.jpg'
-import board from '@/assets/categories/board.jpg'
+import adventure from '@/assets/categories/adventure.jpg'
 import fps from '@/assets/categories/fps.jpg'
 import puzzle from '@/assets/categories/puzzle.jpg'
 import racing from '@/assets/categories/racing.jpg'
 import rpg from '@/assets/categories/rpg.jpg'
 import sports from '@/assets/categories/sports.jpg'
+import strategy from '@/assets/categories/strategy.jpg'
 
 export default {
   computed: {
@@ -89,13 +89,13 @@ export default {
     categories() {
       return [
         { title: 'ACTION', src: action },
-        { title: 'ARCADE', src: arcade },
-        { title: 'BOARD', src: board },
+        { title: 'ADVENTURE', src: adventure },
         { title: 'FPS', src: fps },
         { title: 'PUZZLE', src: puzzle },
         { title: 'RACING', src: racing },
         { title: 'RPG', src: rpg },
         { title: 'SPORTS', src: sports },
+        { title: 'STRATEGY', src: strategy },
       ]
     },
   },

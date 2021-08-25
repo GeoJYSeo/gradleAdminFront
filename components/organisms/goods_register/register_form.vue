@@ -88,6 +88,7 @@
           <FormTextarea
             :required="!isDetail"
             :is-detail="isDetail"
+            :rules="[true]"
             :input-content.sync="goodsInfo.gds_desc"
             label="Goods Description"
           />

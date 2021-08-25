@@ -20,7 +20,11 @@ export const actions = {
     await this.$axios.put('api/comment/', reqObj).then((res) => {
       if (res.data.result_code === 'OK') {
         commit('dialog/setResult', 'regComment', { root: true })
-        dispatch('comments/list/getCommentInfoList', null, { root: true })
+        dispatch(
+          'comments/list/getCommentInfoList',
+          commentInfo.goods_api_response.id,
+          { root: true }
+        )
       }
     })
   },

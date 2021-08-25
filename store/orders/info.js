@@ -25,8 +25,7 @@ export const actions = {
       .then((res) => {
         commit('login/loginSuccess', res.data.data, { root: true })
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         this.$router.push({ name: 'error' })
       })
   },
@@ -47,8 +46,7 @@ export const actions = {
           commit('setStockError', res.data.description)
         }
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         this.$router.push({ name: 'error' })
       })
   },

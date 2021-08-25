@@ -49,7 +49,7 @@ export const state = () => ({
   ],
   gdsNameRules: [
     (v) => !!v || 'Please enter the GOODS NAME',
-    (v) => /^[a-zA-Z0-9\s]{1,24}$/.test(v) || 'Invalid Goods Name',
+    (v) => /^[a-zA-Z0-9'\s]{1,30}$/.test(v) || 'Invalid Goods Name',
   ],
   priceRules: [
     (v) => !!v || 'Please enter the GOODS Price',
@@ -78,7 +78,9 @@ export const state = () => ({
     (v) => /^[a-zA-Z0-9\s]{1,100}$/.test(v) || 'Invalid Address',
   ],
   commentRules: [
-    (v) => !!v || 'Please enter the Comment',
-    (v) => /^[a-zA-Z]{1,100}$/.test(v) || 'Invalid Comment',
+    // (v) => !!v || 'Please enter the Comment',
+    (v) =>
+      /^[a-zA-Z!@#$%^&*()-=+{};:'",./?<>\s]{0,100}$/.test(v) ||
+      'Invalid Comment',
   ],
 })

@@ -66,9 +66,8 @@ export const actions = {
       .then((res) => {
         commit('setCartInfoList', res.data.data)
       })
-      .catch((err) => {
-        console.log(err)
-        // this.$router.push({ name: 'error' })
+      .catch(() => {
+        this.$router.push({ name: 'error' })
       })
   },
   async modify({ dispatch }, cartInfo) {
@@ -91,8 +90,7 @@ export const actions = {
         // commit('setCartInfoList', state.cartInfoList)
         dispatch('getCartList')
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         this.$router.push({ name: 'error' })
       })
   },
@@ -103,8 +101,7 @@ export const actions = {
       .then((res) => {
         dispatch('getCartList')
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         this.$router.push({ name: 'error' })
       })
   },

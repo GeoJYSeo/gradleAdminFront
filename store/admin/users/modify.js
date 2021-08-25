@@ -25,8 +25,7 @@ export const actions = {
           commit('dialog/setDispConfirmDialog', null, { root: true })
         }
       })
-      .catch((err) => {
-        console.log(err.message)
+      .catch(() => {
         this.$router.push({ name: 'error' })
       })
   },

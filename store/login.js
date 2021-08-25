@@ -56,8 +56,7 @@ export const actions = {
             commit('setPermission', res.data.data)
           }
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
           this.$router.push({ name: 'error' })
         })
     }

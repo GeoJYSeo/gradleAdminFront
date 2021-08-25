@@ -45,8 +45,7 @@ export const actions = {
       .then((res) => {
         commit('setCommentInfoList', res.data.data)
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         this.$router.push({ name: 'error' })
       })
   },

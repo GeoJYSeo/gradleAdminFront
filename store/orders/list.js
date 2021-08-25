@@ -51,8 +51,7 @@ export const actions = {
       .then(() => {
         dispatch('orders/cart_list/getCartList', null, { root: true })
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         this.$router.push({ name: 'error' })
       })
   },

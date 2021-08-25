@@ -1,5 +1,5 @@
 <template>
-  <v-container fill-height style="max-width: 1200px" class="pa-15">
+  <v-container fill-height style="max-width: 1600px" class="pa-15">
     <v-layout align-center row wrap>
       <v-flex xs12>
         <v-card>
@@ -38,12 +38,10 @@
                   <v-col
                     v-for="(goodsInfo, index) in goodsInfoList"
                     :key="index"
-                    cols="12"
-                    sm="4"
                   >
-                    <v-row :justify="justify">
-                      <v-card color="#424242">
-                        <div class="pa-3">
+                    <v-row class="justify-center">
+                      <v-card min-width="440" color="#424242">
+                        <div class="image-wrapper">
                           <router-link
                             :to="{
                               name: 'goods-detail',
@@ -60,11 +58,11 @@
                           </router-link>
                         </div>
                         <v-card color="#263238">
-                          <v-card-title
-                            >[{{ goodsInfo.category_api_response.cate_name }}-
+                          <v-card-title class="justify-center">
+                            [{{ goodsInfo.category_api_response.cate_name }}-
                             {{ goodsInfo.cate_code }}]
-                            {{ goodsInfo.gds_name }}</v-card-title
-                          >
+                            {{ goodsInfo.gds_name }}
+                          </v-card-title>
                           <v-card-actions class="justify-right">
                             <v-spacer></v-spacer>
                             <v-btn
@@ -118,7 +116,6 @@ export default {
     return {
       curPageNum: 1,
       keyword: '',
-      justify: 'center',
       accessToken: null,
     }
   },
@@ -156,3 +153,11 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.image-wrapper {
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+}
+</style>

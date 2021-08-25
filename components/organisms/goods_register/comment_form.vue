@@ -74,6 +74,7 @@
               <CompButton
                 text="confirm"
                 color="#43A047"
+                :disabled="disabled"
                 @sendEvent="sendEvent"
               />
             </v-col>
@@ -133,6 +134,9 @@ export default {
   },
   computed: {
     ...mapState('validation', ['commentRules']),
+    disabled() {
+      return !this.commentInfo.comment
+    },
   },
   methods: {
     sendEvent() {
