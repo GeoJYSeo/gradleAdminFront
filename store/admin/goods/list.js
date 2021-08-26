@@ -6,6 +6,9 @@ export const mutations = {
   setGoodsInfoList(state, goodsInfoList) {
     state.goodsInfoList = goodsInfoList
   },
+  initGoodsInfo(state) {
+    state.goodsInfoList = null
+  },
 }
 
 export const actions = {

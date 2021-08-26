@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import authMiddleware from '@/middleware/auth'
 import ProgressLiner from '@/components/molecules/progress_liner'
 
@@ -123,7 +123,11 @@ export default {
   async created() {
     await this.getGoodsList([this.curPageNum, this.keyword])
   },
+  destroyed() {
+    this.initGoodsInfo()
+  },
   methods: {
+    ...mapMutations('admin/goods/list', ['initGoodsInfo']),
     ...mapActions('admin/goods/list', ['getGoodsList', 'back']),
     init() {
       this.keyword = ''

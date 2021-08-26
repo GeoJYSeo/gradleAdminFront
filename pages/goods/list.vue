@@ -139,8 +139,12 @@ export default {
       this.$route.params.categoryName,
     ])
   },
+  destroyed() {
+    this.initGoodsInfo()
+  },
   methods: {
     ...mapMutations('dialog', ['closeDialog']),
+    ...mapMutations('goods/list', ['initGoodsInfo']),
     ...mapActions('goods/list', ['getGoodsList', 'back']),
     ...mapActions('orders/cart_register', ['cartRegister']),
     init() {

@@ -10,6 +10,11 @@ export const mutations = {
     state.pagination = goodsInfoList.pagination
     state.plusCurPageNum = goodsInfoList.pagination.current_page + 1
   },
+  initGoodsInfo(state) {
+    state.goodsInfoList = null
+    state.pagination = null
+    state.plusCurPageNum = null
+  },
 }
 
 export const actions = {
